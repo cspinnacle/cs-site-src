@@ -42,7 +42,7 @@ export default async function ClassInfoPage() {
             {classInfo.frontmatter.title}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300">
-            Essential information about the course structure, curriculum, and policies
+            Complete information about the course structure, curriculum, and policies
           </p>
           
           {classInfo.frontmatter.lastUpdated && (
