@@ -29,8 +29,11 @@ jobs:
     - name: Deploy to GitHub Pages Repository
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        folder: out                                  # The folder the action should deploy
+        folder: out                                   # The folder the action should deploy
         repository-name: cspinnacle/cspinnacle.github.io # The repository the action should deploy to
-        token: ${{ secrets.GITHUB_TOKEN }}           # Use the standard GitHub token
-        branch: main                                 # The branch the action should deploy to
-        clean: true                                  # Automatically remove deleted files from deploy branch
+        token: ${{ secrets.DEPLOY_TOKEN }}            # Use a personal access token with repo scope
+        branch: main                                  # The branch the action should deploy to
+        clean: true                                   # Automatically remove deleted files from deploy branch
+        git-config-name: GitHub Actions               # Set the git config name
+        git-config-email: actions@github.com          # Set the git config email
+        single-commit: true                           # Use a single commit for the deployment
