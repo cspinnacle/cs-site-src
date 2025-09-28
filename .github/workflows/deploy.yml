@@ -1,4 +1,4 @@
-name: Deploy to cspinnacle.github.io
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -9,6 +9,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # This is required to allow the GitHub action to push to the gh-pages branch
     
     steps:
     - name: Checkout Source Repository
@@ -25,15 +27,12 @@ jobs:
       
     - name: Build
       run: npm run build
-    
-    - name: Deploy to GitHub Pages Repository
-      uses: JamesIves/github-pages-deploy-action@v4
+      
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        folder: out                                   # The folder the action should deploy
-        repository-name: cspinnacle/cspinnacle.github.io # The repository the action should deploy to
-        token: ${{ secrets.DEPLOY_TOKEN }}            # Use a personal access token with repo scope
-        branch: main                                  # The branch the action should deploy to
-        clean: true                                   # Automatically remove deleted files from deploy branch
-        git-config-name: GitHub Actions               # Set the git config name
-        git-config-email: actions@github.com          # Set the git config email
-        single-commit: true                           # Use a single commit for the deployment
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./out
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'
+        commit_message: 'Deploy: ${{ github.event.head_commit.message }}'
