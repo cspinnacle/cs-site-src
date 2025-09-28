@@ -8,6 +8,8 @@ This is a Next.js 15 site optimized for static export to GitHub Pages with MDX c
 ### Content Organization
 - **Newsletters**: `/content/newsletters/*.md` → `/newsletters/[slug]`
 - **Articles**: `/content/articles/*.md` → `/articles/[slug]`
+- **Events**: `/content/events/*.md` → displayed on home page
+- **Class Info**: `/content/info/*.md` → `/class-info/` page
 - **Images**: `/public/images/` with subdirectories for articles and newsletters
 
 ### Page Types
@@ -16,6 +18,7 @@ This is a Next.js 15 site optimized for static export to GitHub Pages with MDX c
 - **Newsletter List**: `/newsletters/` - Index of all weekly newsletters
 - **Article Page**: `/articles/[slug]/` - Individual article content
 - **Newsletter Page**: `/newsletters/[slug]/` - Individual newsletter content
+- **Class Info**: `/class-info/` - General class information and curriculum
 
 ### Navigation System
 - Fixed sidebar navigation in desktop view
@@ -75,6 +78,16 @@ This is a Next.js 15 site optimized for static export to GitHub Pages with MDX c
   category: "fundamentals"
   ---
   ```
+- **Event Frontmatter**:
+  ```markdown
+  ---
+  title: "Final Project Due"
+  date: "2024-09-01"           # When the event was posted
+  eventDate: "2024-10-15"      # When the event will occur
+  type: "deadline"             # Options: event, deadline, field-trip, announcement
+  importance: "high"           # Options: high, medium, low
+  ---
+  ```
 
 ### MDX Integration
 - MDX files can be pages (configured in `pageExtensions`)
@@ -96,6 +109,8 @@ This is a Next.js 15 site optimized for static export to GitHub Pages with MDX c
 ### Adding New Content
 - **New Newsletter**: Create markdown file in `/content/newsletters/`
 - **New Article**: Create markdown file in `/content/articles/`
+- **New Event**: Create markdown file in `/content/events/`
+- **Class Information**: Edit markdown files in `/content/info/`
 - **Add Images**: Place in appropriate folder in `/public/images/`
 
 ### Adding Images to Content

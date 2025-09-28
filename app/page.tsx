@@ -1,13 +1,17 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import HeroSlider from './components/HeroSlider';
+import UpcomingEvents from './components/UpcomingEvents';
+import { getContentItems, EventItem } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Computer Science at Pinnacle Academy',
   description: 'Class hub for students and families — newsletters, articles, and resources.',
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const events = await getContentItems('events') as EventItem[];
+  
   return (
     <div className="min-h-screen bg-white dark:bg-black">
       {/* Main Container */}
@@ -41,6 +45,9 @@ export default function HomePage() {
           </header>
         </div>
 
+        {/* General Notifications and Announcements */}
+        <UpcomingEvents events={events as any} />
+        
         {/* Main Grid */}
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
           {/* Weekly Newsletters - Large Card */}

@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getContentItems } from '@/lib/content';
+import { getContentItems, ContentItem } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Articles - CS at Pinnacle Academy',
   description: 'Tutorials, tech explainers, and programming guides.',
 };
 
-export default function ArticlesPage() {
-  const articles = getContentItems('articles');
+export default async function ArticlesPage() {
+  const articles = getContentItems('articles') as ContentItem[];
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">

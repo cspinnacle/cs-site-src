@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { getContentItems, getContentItem } from '@/lib/content';
+import { getContentItems, getContentItem, ContentItem } from '@/lib/content';
 import { notFound } from 'next/navigation';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  const newsletters = getContentItems('newsletters');
+  const newsletters = getContentItems('newsletters') as ContentItem[];
   return newsletters.map((newsletter) => ({
     slug: newsletter.slug,
   }));
@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const newsletter = getContentItem('newsletters', slug);
+  const newsletter = getContentItem('newsletters', slug) as ContentItem;
   
   if (!newsletter) {
     return {
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function NewsletterPage({ params }: Props) {
   const { slug } = await params;
-  const newsletter = getContentItem('newsletters', slug);
+  const newsletter = getContentItem('newsletters', slug) as ContentItem;
 
   if (!newsletter) {
     notFound();
