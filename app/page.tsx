@@ -46,7 +46,7 @@ export default async function HomePage() {
         </div>
 
         {/* General Notifications and Announcements */}
-        <UpcomingEvents events={events as any} />
+        <UpcomingEvents events={events} />
         
         {/* Main Grid */}
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
