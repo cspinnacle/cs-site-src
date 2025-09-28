@@ -173,7 +173,7 @@ export default function HomePage() {
         <footer className="border-t border-gray-200 dark:border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 dark:text-gray-400 text-sm">
-              Computer Science @ Pinnacle Academy
+              Computer Science @ Pinnacle Academy - Updated 2025
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link href="/newsletters/" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
