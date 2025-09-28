@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to cspinnacle.github.io
 
 on:
   push:
@@ -9,8 +9,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # This is required to allow the GitHub action to push to the gh-pages branch
     
     steps:
     - name: Checkout Source Repository
@@ -28,11 +26,17 @@ jobs:
     - name: Build
       run: npm run build
       
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Deploy to External GitHub Pages Repository
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./out
-        user_name: 'github-actions[bot]'
-        user_email: 'github-actions[bot]@users.noreply.github.com'
-        commit_message: 'Deploy: ${{ github.event.head_commit.message }}'
+        folder: out                                  # The folder containing the built site
+        repository-name: cspinnacle/cspinnacle.github.io  # The external repository to deploy to
+        branch: main                                 # The branch to deploy to
+        token: ${{ secrets.EXTERNAL_REPO_TOKEN }}    # PAT with access to the external repo
+        clean: true                                  # Remove files from previous deployment
+        git-config-name: GitHub Actions Bot          # Set a name for the committer
+        git-config-email: noreply@github.com         # Set an email for the committer
+        commit-message: "Deploy from cs-site-src: ${{ github.event.head_commit.message || 'Update site' }}"  # Custom commit message
+        clean-exclude: |                             # Files to preserve during clean
+          .nojekyll
+          CNAME
