@@ -8,24 +8,24 @@ lastUpdated: "2025-09-28"
 
 Welcome to our Computer Science class! This page contains essential information about the course structure, curriculum, and policies.
 
-## Course Overview {#course-overview}
+## Course Overview
 
 This course is designed to introduce students to the fundamental concepts of computer science and programming. Throughout the year, we'll explore various topics ranging from basic programming concepts to more advanced computational thinking and problem-solving techniques.
 
-## Instructor Information {#instructor-information}
+## Instructor Information
 
 - **Instructor:** Mr. Myradov
 - **Email:** instructor@pinnacleacademy.edu
 - **Office Hours:** Tuesdays and Thursdays, 3:00 - 4:00 PM
 
-## Class Schedule {#class-schedule}
+## Class Schedule
 
 Classes are held three times a week:
 - Monday: 9:00 - 10:30 AM
 - Wednesday: 9:00 - 10:30 AM
 - Friday: 9:00 - 10:30 AM
 
-## Curriculum {#curriculum}
+## Curriculum
 
 Our curriculum is divided into several modules:
 
@@ -56,7 +56,7 @@ Our curriculum is divided into several modules:
 - Game development basics
 - Final project
 
-## Grading Policy {#grading-policy}
+## Grading Policy
 
 Your grade will be determined by:
 - Assignments and labs: 40%
@@ -64,27 +64,27 @@ Your grade will be determined by:
 - Quizzes and tests: 20%
 - Class participation: 10%
 
-## Required Materials {#required-materials}
+## Required Materials
 
 - Personal laptop (Windows, Mac, or Chromebook)
 - Notebook for taking notes
 - USB flash drive (minimum 16GB)
 
-## Online Resources {#online-resources}
+## Online Resources
 
 Throughout this course, we'll use various online platforms:
 - GitHub Classroom for assignments
 - Replit for collaborative coding
 - Class website for announcements and resources
 
-## Expectations {#expectations}
+## Expectations
 
 1. **Attendance:** Regular attendance is essential. If you must miss a class, please inform the instructor ahead of time.
 2. **Participation:** Active participation in discussions and activities is expected.
 3. **Academic Integrity:** All submitted work must be your own. Plagiarism will result in a zero for the assignment.
 4. **Respectful Environment:** Create a positive learning environment by treating classmates and instructors with respect.
 
-## Support Resources {#support-resources}
+## Support Resources
 
 If you're struggling with any concept or assignment, here are resources available to you:
 - Office hours (see schedule above)
