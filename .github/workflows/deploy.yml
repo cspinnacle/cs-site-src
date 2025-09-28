@@ -1,0 +1,36 @@
+name: Deploy to cspinnacle.github.io
+
+on:
+  push:
+    branches: [ main ]
+  # Allows manual trigger from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Source Repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build
+      run: npm run build
+    
+    - name: Deploy to GitHub Pages Repository
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: out                                  # The folder the action should deploy
+        repository-name: cspinnacle/cspinnacle.github.io # The repository the action should deploy to
+        token: ${{ secrets.DEPLOY_ACCESS_TOKEN }}    # GitHub personal access token with repo permissions
+        branch: main                                 # The branch the action should deploy to
+        clean: true                                  # Automatically remove deleted files from deploy branch
