@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeSlug from 'rehype-slug';
 import { getContentItems, getContentItem, ContentItem } from '@/lib/content';
 import { notFound } from 'next/navigation';
 
@@ -71,8 +72,23 @@ export default async function ArticlePage({ params }: Props) {
           </div>
         </div>
 
-        <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-blue-600 prose-code:text-pink-600">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-blue-600 prose-code:text-pink-600 prose-img:max-w-full">
+          <ReactMarkdown 
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeSlug]}
+            components={{
+              img: ({node, ...props}) => (
+                <img {...props} className="mx-auto rounded-lg shadow-md my-6" />
+              ),
+              code: ({node, className, children, ...props}) => {
+                return (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                )
+              }
+            }}
+          >
             {article.content}
           </ReactMarkdown>
         </article>
