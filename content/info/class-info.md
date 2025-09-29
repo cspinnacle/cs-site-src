@@ -2,6 +2,7 @@
 title: "Computer Science Class Information"
 date: "2025-08-15"
 lastUpdated: "2025-09-28"
+updated: true
 ---
 
 # Computer Science at Pinnacle Academy

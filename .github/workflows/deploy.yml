@@ -32,7 +32,7 @@ jobs:
         folder: out                                  # The folder containing the built site
         repository-name: cspinnacle/cspinnacle.github.io  # The external repository to deploy to
         branch: main                                 # The branch to deploy to
-        token: ${{ secrets.EXTERNAL_REPO_TOKEN }}    # PAT with access to the external repo
+        token: ${{ secrets.DEPLOY_ACCESS_TOKEN }}    # PAT with access to the external repo
         clean: true                                  # Remove files from previous deployment
         git-config-name: GitHub Actions Bot          # Set a name for the committer
         git-config-email: noreply@github.com         # Set an email for the committer
