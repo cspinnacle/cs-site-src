@@ -49,7 +49,11 @@ export default function HeroSlider() {
   }, []);
   
   return (
-    <div className="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-10">
+    <section 
+      className="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-10"
+      aria-label="Hero slider"
+      role="banner"
+    >
       {/* Slider */}
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
@@ -60,6 +64,7 @@ export default function HeroSlider() {
             } ${
               index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
+            aria-hidden={index !== currentSlide}
           >
             {/* Content */}
             <div className="absolute inset-0 flex items-center justify-center">
@@ -116,6 +121,6 @@ export default function HeroSlider() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
-    </div>
+    </section>
   );
 }

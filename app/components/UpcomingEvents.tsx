@@ -57,7 +57,7 @@ function EventCard({ event }: EventCardProps) {
   const bgClass = `${styling.bg} ${styling.border}`;
   
   return (
-    <div className={`border rounded-xl p-6 mb-8 ${bgClass}`}>
+    <article className={`border rounded-xl p-6 mb-8 ${bgClass}`}>
       <div className="flex items-start">
         <div className={`w-10 h-10 rounded-full bg-${event.type === 'event' ? 'blue' : 
                         event.type === 'deadline' ? 'amber' : 
@@ -91,20 +91,20 @@ function EventCard({ event }: EventCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
 export default function UpcomingEvents({ events }: { events: EventItem[] }) {
   return (
-    <div className="mb-16">
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+    <section className="mb-16" aria-labelledby="upcoming-events-heading">
+      <h2 id="upcoming-events-heading" className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
         Upcoming Events
       </h2>
       
       {events.map((event) => (
         <EventCard key={event.slug} event={event} />
       ))}
-    </div>
+    </section>
   );
 }

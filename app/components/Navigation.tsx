@@ -30,6 +30,8 @@ export default function Navigation() {
           onClick={() => setIsOpen(!isOpen)}
           className="p-2 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           aria-label="Toggle navigation"
+          aria-expanded={isOpen}
+          aria-controls="main-navigation"
         >
           <svg
             className={`w-5 h-5 text-gray-600 dark:text-gray-400 transition-transform ${
@@ -58,13 +60,15 @@ export default function Navigation() {
 
       {/* Sidebar Navigation */}
       <nav
+        id="main-navigation"
         className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-black border-r border-gray-200 dark:border-gray-800 z-40 transform transition-transform duration-200 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0`}
+        aria-label="Main navigation"
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="p-6 border-b border-gray-200 dark:border-gray-800">
+          <header className="p-6 border-b border-gray-200 dark:border-gray-800">
             <Link
               href="/"
               className="block"
@@ -77,11 +81,11 @@ export default function Navigation() {
                 Mr. Myradov&apos;s Class
               </p>
             </Link>
-          </div>
+          </header>
 
           {/* Navigation Links */}
-          <div className="flex-1 px-4 py-6">
-            <ul className="space-y-2">
+          <div className="flex-1 px-4 py-6" role="navigation">
+            <ul className="space-y-2" role="list">
               {navigation.map((item) => (
                 <li key={item.name}>
                   <Link
@@ -121,12 +125,12 @@ export default function Navigation() {
           </div>
 
           {/* Footer */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+          <footer className="p-4 border-t border-gray-200 dark:border-gray-800">
             <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
-              <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+              <div className="w-2 h-2 bg-green-500 rounded-full mr-2" aria-hidden="true"></div>
               <span>Site updated regularly</span>
             </div>
-          </div>
+          </footer>
         </div>
       </nav>
     </>

@@ -17,8 +17,8 @@ export default async function HomePage() {
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-6 py-16 lg:py-16 pt-20 lg:pt-16">
         {/* Hero Section */}
-        <div className="border-b border-gray-200 dark:border-gray-800 pb-16 mb-16">
-          <header className="max-w-4xl mx-auto">
+        <header className="border-b border-gray-200 dark:border-gray-800 pb-16 mb-16">
+          <div className="max-w-4xl mx-auto">
             <HeroSlider />
             
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight text-center">
@@ -42,16 +42,16 @@ export default async function HomePage() {
                 Browse Articles
               </Link>
             </div>
-          </header>
-        </div>
+          </div>
+        </header>
 
         {/* General Notifications and Announcements */}
         <UpcomingEvents events={events} />
         
         {/* Main Grid */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+        <section className="grid lg:grid-cols-3 gap-8 mb-16" aria-label="Main content sections">
           {/* Weekly Newsletters - Large Card */}
-          <div className="lg:col-span-2">
+          <article className="lg:col-span-2">
             <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-8 h-full hover:border-gray-300 dark:hover:border-gray-700 transition-colors group">
               <div className="flex items-start justify-between mb-6">
                 <div>
@@ -84,11 +84,11 @@ export default async function HomePage() {
                 </div>
               </div>
             </div>
-          </div>
+          </article>
 
           {/* Articles & Tutorials */}
-          <div className="space-y-8">
-            <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors group">
+          <aside className="space-y-8">
+            <section className="border border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors group">
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-green-600 transition-colors">
@@ -110,10 +110,10 @@ export default async function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
-            </div>
+            </section>
 
             {/* Quick Stats */}
-            <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-6">
+            <section className="border border-gray-200 dark:border-gray-800 rounded-xl p-6">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Class Info</h3>
               <div className="space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-800 last:border-b-0">
@@ -129,13 +129,13 @@ export default async function HomePage() {
                   <span className="font-medium text-gray-900 dark:text-white text-sm">Pinnacle Academy</span>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+            </section>
+          </aside>
+        </section>
 
         {/* Feature Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+        <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16" aria-label="Feature highlights">
+          <article className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
             <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mx-auto mb-4">
               <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -143,9 +143,9 @@ export default async function HomePage() {
             </div>
             <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Weekly Updates</h4>
             <p className="text-gray-600 dark:text-gray-400 text-sm">Regular newsletters with assignments and progress</p>
-          </div>
+          </article>
           
-          <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+          <article className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
             <div className="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center mx-auto mb-4">
               <svg className="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -153,9 +153,9 @@ export default async function HomePage() {
             </div>
             <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Coding Tutorials</h4>
             <p className="text-gray-600 dark:text-gray-400 text-sm">Step-by-step programming guides and examples</p>
-          </div>
+          </article>
           
-          <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+          <article className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
             <div className="w-12 h-12 rounded-lg bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center mx-auto mb-4">
               <svg className="w-6 h-6 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -163,9 +163,9 @@ export default async function HomePage() {
             </div>
             <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Quick Reference</h4>
             <p className="text-gray-600 dark:text-gray-400 text-sm">Easy-to-find resources and class materials</p>
-          </div>
+          </article>
           
-          <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+          <article className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
             <div className="w-12 h-12 rounded-lg bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center mx-auto mb-4">
               <svg className="w-6 h-6 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -173,8 +173,8 @@ export default async function HomePage() {
             </div>
             <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Always Updated</h4>
             <p className="text-gray-600 dark:text-gray-400 text-sm">Fresh content and announcements regularly</p>
-          </div>
-        </div>
+          </article>
+        </section>
 
         {/* Footer */}
         <footer className="border-t border-gray-200 dark:border-gray-800 pt-8">
