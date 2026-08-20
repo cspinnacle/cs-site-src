@@ -1,91 +1,162 @@
 @import "tailwindcss";
 
+/* =========================================================
+   CS @ Pinnacle Academy — Design Tokens
+   Palette drawn from a code editor's syntax theme: an "ink"
+   background, teal keyword accent, amber string accent, plus
+   a rare rose used only for tiny sample/live indicators.
+   Committed to a single designed theme (no auto dark-mode
+   switch) so the palette stays intentional everywhere.
+   ========================================================= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-ink: #16233d;
+  --color-ink-2: #1e2e4d;
+  --color-ink-3: #26375a;
+  --color-paper: #f6f7fb;
+  --color-paper-2: #eceff5;
+  --color-keyword: #2fa6a6;
+  --color-keyword-dim: #1f7a7a;
+  --color-string: #e3a548;
+  --color-comment: #6b7a99;
+  --color-rose: #e2665a;
+  --color-text: #1b2436;
+  --color-text-soft: #4a5670;
+  --color-border: #dce1ea;
+  --color-border-dark: #33436a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--color-ink);
+  --color-ink-2: var(--color-ink-2);
+  --color-ink-3: var(--color-ink-3);
+  --color-paper: var(--color-paper);
+  --color-paper-2: var(--color-paper-2);
+  --color-keyword: var(--color-keyword);
+  --color-keyword-dim: var(--color-keyword-dim);
+  --color-string: var(--color-string);
+  --color-comment: var(--color-comment);
+  --color-rose: var(--color-rose);
+  --color-text: var(--color-text);
+  --color-text-soft: var(--color-text-soft);
+  --color-border: var(--color-border);
+  --color-border-dark: var(--color-border-dark);
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jbmono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #030712;
-    --foreground: #f9fafb;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
-}
-
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Clean typography for code */
-.prose pre {
-  background-color: rgb(249 250 251);
-  border: 1px solid rgb(229 231 235);
-  border-radius: 0.375rem;
-  padding: 1rem;
-  overflow-x: auto;
+body {
+  background: var(--color-paper);
+  color: var(--color-text);
+  font-family: var(--font-body), -apple-system, Segoe UI, sans-serif;
+  line-height: 1.6;
 }
 
-@media (prefers-color-scheme: dark) {
-  .prose pre {
-    background-color: rgb(17 24 39);
-    border-color: rgb(55 65 81);
+h1, h2, h3 {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+@layer base {
+  h1, h2, h3 {
+    color: var(--color-ink);
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--color-string);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes gridpan {
+  from { background-position: 0 0; }
+  to { background-position: 420px 420px; }
+}
+.hero-grid-bg {
+  background-image:
+    linear-gradient(rgba(143, 224, 218, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143, 224, 218, 0.07) 1px, transparent 1px);
+  background-size: 42px 42px;
+  animation: gridpan 26s linear infinite;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, black 40%, transparent 90%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, black 40%, transparent 90%);
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+.caret {
+  display: inline-block;
+  width: 8px;
+  height: 1.05em;
+  background: var(--color-string);
+  vertical-align: -2px;
+  animation: blink 1s steps(1) infinite;
+}
+
+/* Prose (markdown-rendered newsletters/articles) */
+.prose {
+  color: var(--color-text-soft);
+}
+.prose h1, .prose h2, .prose h3 {
+  color: var(--color-ink);
+  font-family: var(--font-display), Georgia, serif;
+}
+.prose h2 {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.4rem;
+  margin-top: 2rem;
+}
+.prose a {
+  color: var(--color-keyword-dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-keyword);
+}
+.prose pre {
+  background: var(--color-ink);
+  border: 1px solid var(--color-border-dark);
+  border-radius: 10px;
+  padding: 1.1rem;
+  overflow-x: auto;
+}
 .prose code {
-  background-color: rgb(243 244 246);
-  color: rgb(219 39 119);
-  padding: 0.125rem 0.25rem;
-  border-radius: 0.25rem;
+  background: var(--color-paper-2);
+  color: var(--color-rose);
+  padding: 0.15rem 0.35rem;
+  border-radius: 5px;
+  font-family: var(--font-mono), monospace;
   font-size: 0.875rem;
   font-weight: 500;
 }
-
-@media (prefers-color-scheme: dark) {
-  .prose code {
-    background-color: rgb(31 41 55);
-    color: rgb(249 168 212);
-  }
-}
-
 .prose pre code {
-  background-color: transparent;
+  background: transparent;
+  color: #c9d4e8;
   padding: 0;
-  color: inherit;
   font-weight: normal;
 }
-
-/* Clean link styling */
-.prose a {
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease;
+.prose img {
+  border-radius: 10px;
+  margin: 1.5rem auto;
 }
-
-.prose a:hover {
-  border-bottom-color: currentColor;
-}
-
-/* Better list styling */
 .prose ul, .prose ol {
   margin-left: 1.25rem;
 }
-
 .prose li {
-  margin: 0.25rem 0;
+  margin: 0.3rem 0;
 }

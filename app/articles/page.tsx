@@ -1,78 +1,74 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { getContentItems, ContentItem } from '@/lib/content';
+import type { Metadata } from "next";
+import Link from "next/link";
+import Reveal from "../components/Reveal";
+import { getContentItems, slugifyCategory, ContentItem } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: 'Articles - CS at Pinnacle Academy',
-  description: 'Tutorials, tech explainers, and programming guides.',
+  title: "Articles — CS @ Pinnacle Academy",
+  description: "Plain-language tutorials and concept explainers for students and families.",
 };
 
-export default async function ArticlesPage() {
-  const articles = getContentItems('articles') as ContentItem[];
+export default function ArticlesPage() {
+  const articles = getContentItems("articles") as ContentItem[];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
-      <div className="max-w-4xl mx-auto px-6 py-16 pt-20 lg:pt-16">
-        <header className="mb-12">
-          <nav className="mb-8">
-            <Link href="/" className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to Home
-            </Link>
-          </nav>
-          
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Articles & Tutorials
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
-            Programming tutorials, tech explainers, and helpful coding guides.
+    <>
+      <div className="bg-ink text-white pt-[110px] pb-11">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="font-mono text-sm text-comment mb-3.5">
+            cs/pinnacle/<span className="text-string">articles.md</span>
+          </div>
+          <h1 className="text-white text-3xl md:text-4xl font-semibold">Articles &amp; Tutorials</h1>
+          <p className="max-w-xl mt-3.5 text-[#B9C4DC]">
+            Programming guides and plain-language explainers — written for
+            students, but readable by anyone curious.
           </p>
-        </header>
-
-        <main className="space-y-6">
-          {articles.length === 0 ? (
-            <section className="text-center py-12">
-              <p className="text-gray-500 dark:text-gray-400">No articles yet. Check back soon!</p>
-            </section>
-          ) : (
-            articles.map((article) => (
-              <article key={article.slug} className="border border-gray-200 dark:border-gray-800 rounded-lg hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center space-x-3">
-                      {article.category && (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200">
-                          {article.category}
-                        </span>
-                      )}
-                      {article.date && (
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          {new Date(article.date).toLocaleDateString()}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                    <Link href={`/articles/${article.slug}`} className="hover:text-blue-600 transition-colors">
-                      {article.title}
-                    </Link>
-                  </h2>
-                  
-                  <Link href={`/articles/${article.slug}`} className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700 transition-colors">
-                    Read article
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </div>
-              </article>
-            ))
-          )}
-        </main>
+        </div>
       </div>
-    </div>
+
+      <section className="py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          {articles.some((a) => a.sample) && (
+            <Reveal className="mb-9">
+              <p className="font-mono text-xs text-comment">
+                {"# sample content — replace in content/articles/"}
+              </p>
+            </Reveal>
+          )}
+
+          {articles.length === 0 ? (
+            <p className="text-text-soft text-center py-14">
+              No articles yet. Check back soon!
+            </p>
+          ) : (
+            <div className="border-t border-border">
+              {articles.map((a, i) => (
+                <Reveal key={a.slug} delay={i * 0.04}>
+                  <Link
+                    href={`/articles/${a.slug}`}
+                    className="group flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 py-4 px-2 -mx-2 border-b border-border hover:bg-paper-2 transition-colors"
+                  >
+                    <h2 className="text-ink group-hover:text-keyword-dim transition-colors">
+                      {a.title}
+                      {a.sample && (
+                        <span className="ml-2 font-body text-xs text-rose">&middot; sample</span>
+                      )}
+                    </h2>
+                    <span className="sm:ml-auto flex items-center gap-3 text-xs text-comment whitespace-nowrap">
+                      {a.category && <span>category: {slugifyCategory(a.category)}</span>}
+                      {a.date && (
+                        <span>
+                          {new Date(a.date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                        </span>
+                      )}
+                    </span>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </>
   );
 }

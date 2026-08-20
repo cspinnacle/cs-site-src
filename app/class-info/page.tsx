@@ -1,197 +1,350 @@
-import type { Metadata } from 'next';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import type { Metadata } from "next";
+import SubNav from "../components/SubNav";
+import Reveal from "../components/Reveal";
 
 export const metadata: Metadata = {
-  title: 'Class Information - CS at Pinnacle Academy',
-  description: 'Class information, curriculum, and policies for Computer Science at Pinnacle Academy.',
+  title: "Class Info — CS @ Pinnacle Academy",
+  description:
+    "Everything families need: schedule, curriculum, grading philosophy, classroom rules, SIS portal, and clubs.",
 };
 
-async function getClassInfo() {
-  const filePath = path.join(process.cwd(), 'content', 'info', 'class-info.md');
-  const fileContent = fs.readFileSync(filePath, 'utf8');
-  const { data, content } = matter(fileContent);
-  
-  return {
-    frontmatter: data,
-    content,
-  };
+const CURRICULUM = [
+  {
+    tag: "Grade 6 · 2x/week",
+    title: "Introduction to Computer Science",
+    desc: 'CodeHS "Mix & Match Middle School" modules — Karel logic, the internet, JavaScript art, and a new AI-literacy module with Teachable Machine.',
+  },
+  {
+    tag: "Grade 7 · 2x/week",
+    title: "Python with Turtle Graphics",
+    desc: 'CodeHS "Python Basics with Tracy the Turtle" 1 & 2 — programming fundamentals through visual, motivating graphics.',
+  },
+  {
+    tag: "Grade 8 · 3x/week",
+    title: "Python Programming",
+    desc: 'CodeHS "Introduction to Python Programming" — data structures, OOP, and a capstone AI text-classification project.',
+  },
+  {
+    tag: "Grade 9 · 3x/week",
+    title: "AI Foundations",
+    desc: "Code.org's \"Computer Science and AI Foundations,\" then a semester building an original AI-powered web app.",
+  },
+  {
+    tag: "Grades 10–11 · 4x/week",
+    title: "AP Computer Science A",
+    desc: "College Board's 2025–26 revised course: Objects & Methods, Selection & Iteration, Class Creation, Data Collections.",
+  },
+];
+
+const SCHEDULE = [
+  ["6th", "Introduction to Computer Science", "2x per week"],
+  ["7th", "Python with Turtle Graphics", "2x per week"],
+  ["8th", "Python Programming", "3x per week"],
+  ["9th", "AI Foundations", "3x per week"],
+  ["10th–11th", "AP Computer Science A", "4x per week"],
+];
+
+const THREE_RS = [
+  { c: "bg-ink text-white", t: "Respect", d: "For yourself, your classmates, your teacher, and all classroom technology and equipment." },
+  { c: "bg-keyword text-white", t: "Responsibility", d: "Own your learning: complete work honestly, care for shared devices, and communicate when you need help." },
+  { c: "bg-string text-ink", t: "Readiness", d: "Arrive on time, prepared to focus, and ready to problem-solve — coding rewards patience and persistence." },
+];
+
+function Row({ ic, title, children }: { ic: string; title?: string; children: React.ReactNode }) {
+  return (
+    <div className="flex gap-4 items-start py-5 border-b border-border last:border-b-0">
+      <div className="w-10 h-10 rounded-full bg-ink text-white flex items-center justify-center font-mono text-xs font-semibold shrink-0">
+        {ic}
+      </div>
+      <div>
+        {title && <h4 className="text-ink font-semibold mb-0.5">{title}</h4>}
+        <div className="text-sm text-text-soft">{children}</div>
+      </div>
+    </div>
+  );
 }
 
-// Simple styled component for course topics
-const TopicCard = ({ title, description }: { title: string; description: string }) => (
-  <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-5">
-    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">{title}</h4>
-    <p className="text-gray-600 dark:text-gray-300 text-sm">{description}</p>
-  </div>
-);
-
-export default async function ClassInfoPage() {
-  const classInfo = await getClassInfo();
-  
+export default function ClassInfoPage() {
   return (
-    <div className="bg-white dark:bg-gray-950">
-      <div className="max-w-5xl mx-auto px-6 py-12">
-        {/* Header */}
-        <header className="mb-12 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            {classInfo.frontmatter.title}
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
-            Complete information about the course structure, curriculum, and policies
+    <>
+      <div className="bg-ink text-white pt-[110px] pb-11">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="font-mono text-sm text-comment mb-3.5">
+            cs/pinnacle/<span className="text-string">class-info.md</span>
+          </div>
+          <h1 className="text-white text-3xl md:text-4xl font-semibold">Class Info</h1>
+          <p className="max-w-xl mt-3.5 text-[#B9C4DC]">
+            The full syllabus, in one page: who&apos;s teaching, what&apos;s
+            being taught, how we run the room, and how to reach us.
           </p>
-          
-          {classInfo.frontmatter.lastUpdated && (
-            <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-              Last updated: {new Date(classInfo.frontmatter.lastUpdated).toLocaleDateString()}
-            </div>
-          )}
-        </header>
-        
-        <hr className="border-t border-gray-200 dark:border-gray-800 mb-8" />
-        
-        {/* Two-column layout */}
-        <div className="lg:grid lg:grid-cols-4 lg:gap-8">
-          {/* Sidebar */}
-          <aside className="mb-8 lg:mb-0">
-            <div className="sticky top-24 p-5 border border-gray-200 dark:border-gray-800 rounded-lg bg-gray-50 dark:bg-gray-900">
-              <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Quick Navigation</h2>
-              <nav>
-                <ul className="space-y-2">
-                  <li><a href="#course-overview" className="text-blue-600 dark:text-blue-400 hover:underline block text-sm">Course Overview</a></li>
-                  <li><a href="#instructor-information" className="text-blue-600 dark:text-blue-400 hover:underline block text-sm">Instructor Information</a></li>
-                  <li><a href="#class-schedule" className="text-blue-600 dark:text-blue-400 hover:underline block text-sm">Class Schedule</a></li>
-                  <li><a href="#curriculum" className="text-blue-600 dark:text-blue-400 hover:underline block text-sm">Curriculum</a></li>
-                  <li><a href="#grading-policy" className="text-blue-600 dark:text-blue-400 hover:underline block text-sm">Grading Policy</a></li>
-                  <li><a href="#required-materials" className="text-blue-600 dark:text-blue-400 hover:underline block text-sm">Required Materials</a></li>
-                  <li><a href="#online-resources" className="text-blue-600 dark:text-blue-400 hover:underline block text-sm">Online Resources</a></li>
-                  <li><a href="#expectations" className="text-blue-600 dark:text-blue-400 hover:underline block text-sm">Expectations</a></li>
-                  <li><a href="#support-resources" className="text-blue-600 dark:text-blue-400 hover:underline block text-sm">Support Resources</a></li>
-                </ul>
-              </nav>
-              
-              {/* Key info card */}
-              <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-lg">
-                <h3 className="font-medium text-gray-900 dark:text-white mb-2">Key Information</h3>
-                <p className="text-sm text-gray-700 dark:text-gray-300 mb-1">
-                  <strong>Classes:</strong> Mon/Wed/Fri 9:00-10:30 AM
+        </div>
+      </div>
+
+      <SubNav />
+
+      {/* TEACHER */}
+      <section id="teacher" className="py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="mb-10">
+            <span className="font-mono text-xs text-keyword-dim">{"// meet-your-teacher"}</span>
+            <h2 className="text-2xl font-semibold mt-2">Mr. Myradov</h2>
+            <p className="text-text-soft mt-1">Computer Science, Grades 6–11 · Computer Lab</p>
+          </Reveal>
+          <Reveal className="max-w-xl border border-border rounded-[10px] bg-white p-7">
+            <Row ic="ED" title="Engineering background">M.Eng. in Computer Technology</Row>
+            <Row ic="EX" title="Industry experience">Software engineering + ML/AI research</Row>
+            <Row ic="CS" title="Teaching load">Six CS courses across Grades 6–11 this year</Row>
+            <Row ic="@" title="Contact">
+              <a href="mailto:#" className="text-keyword-dim border-b border-keyword">
+                [Insert School Email Address]
+              </a>
+            </Row>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* CURRICULUM */}
+      <section id="curriculum" className="py-16 bg-paper-2">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="max-w-xl mb-10">
+            <span className="font-mono text-xs text-keyword-dim">{"// this-years-curriculum"}</span>
+            <h2 className="text-2xl font-semibold mt-2">What each grade is building</h2>
+            <p className="text-text-soft mt-1">
+              Unit names below match the CodeHS / Code.org / College Board
+              platforms directly, so progress is easy to verify.
+            </p>
+          </Reveal>
+          <div className="grid md:grid-cols-3 gap-5">
+            {CURRICULUM.map((c, i) => (
+              <Reveal key={c.title} delay={i * 0.06}>
+                <div className="h-full border border-border rounded-[10px] bg-white p-6">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-keyword-dim inline-block mb-3.5">
+                    {c.tag}
+                  </span>
+                  <h3 className="font-semibold text-ink mb-2">{c.title}</h3>
+                  <p className="text-sm text-text-soft">{c.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+            <Reveal delay={0.3}>
+              <div className="h-full rounded-[10px] bg-ink p-6">
+                <span className="text-xs font-semibold uppercase tracking-wide text-[#8FE0DA] inline-block mb-3.5">
+                  new this year
+                </span>
+                <h3 className="font-semibold text-white mb-2">AI, everywhere</h3>
+                <p className="text-sm text-[#B9C4DC]">
+                  Hands-on AI projects now run through Grades 6–9, aligning
+                  with national priorities on AI education and emerging
+                  technology.
                 </p>
-                <p className="text-sm text-gray-700 dark:text-gray-300 mb-1">
-                  <strong>Office Hours:</strong> Tue/Thu 3:00-4:00 PM
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* SCHEDULE */}
+      <section id="schedule" className="py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="mb-10">
+            <span className="font-mono text-xs text-keyword-dim">{"// how-often-we-meet"}</span>
+            <h2 className="text-2xl font-semibold mt-2">Class schedule</h2>
+          </Reveal>
+          <Reveal className="border border-border rounded-[10px] overflow-hidden">
+            <table className="w-full border-collapse bg-white">
+              <thead>
+                <tr>
+                  {["Grade", "Course", "Meetings / week"].map((h) => (
+                    <th key={h} className="text-left font-mono text-xs uppercase tracking-wide bg-ink text-white px-5 py-4">
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {SCHEDULE.map((row, i) => (
+                  <tr key={row[0]} className={i % 2 === 1 ? "bg-paper-2" : ""}>
+                    <td className="px-5 py-4 text-sm">{row[0]}</td>
+                    <td className="px-5 py-4 text-sm">{row[1]}</td>
+                    <td className="px-5 py-4 text-sm font-mono text-keyword-dim">{row[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Reveal>
+          <p className="font-mono text-sm text-text-soft mt-4">
+            Room assignments and bell times are confirmed in QuickSchools and
+            Google Classroom.
+          </p>
+        </div>
+      </section>
+
+      {/* HOMEWORK */}
+      <section id="homework" className="py-16 bg-paper-2">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="mb-10">
+            <span className="font-mono text-xs text-keyword-dim">{"// homework-and-reading-logs"}</span>
+            <h2 className="text-2xl font-semibold mt-2">Our approach to at-home work</h2>
+          </Reveal>
+          <Reveal className="max-w-2xl border border-border rounded-[10px] bg-white p-7">
+            <Row ic="1">Class time is built around hands-on coding and project work — most learning happens during class.</Row>
+            <Row ic="2">Homework is occasional: usually finishing an in-progress module or preparing materials for the next project.</Row>
+            <Row ic="3">There&apos;s no formal reading log for Computer Science — any at-home work is posted in Google Classroom with a clear due date.</Row>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* CLASSROOM MANAGEMENT */}
+      <section id="classroom" className="py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="mb-10">
+            <span className="font-mono text-xs text-keyword-dim">{"// classroom-management"}</span>
+            <h2 className="text-2xl font-semibold mt-2">The 3 R&apos;s</h2>
+          </Reveal>
+          <div className="grid md:grid-cols-3 gap-5">
+            {THREE_RS.map((r, i) => (
+              <Reveal key={r.t} delay={i * 0.08}>
+                <div className="text-center border border-border rounded-[10px] bg-white p-9">
+                  <div className={`w-[70px] h-[70px] rounded-full flex items-center justify-center mx-auto mb-5 font-serif text-3xl font-bold ${r.c}`}>
+                    R
+                  </div>
+                  <h3 className="text-lg font-semibold text-ink mb-2">{r.t}</h3>
+                  <p className="text-sm text-text-soft">{r.d}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* STAY CONNECTED */}
+      <section id="connect" className="py-16 bg-paper-2">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="mb-10">
+            <span className="font-mono text-xs text-keyword-dim">{"// staying-connected"}</span>
+            <h2 className="text-2xl font-semibold mt-2">Website, newsletters &amp; Google Classroom</h2>
+          </Reveal>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { tag: "this site", title: "Class Website", desc: "Syllabus, yearly plan, and resources — always at cspinnacle.github.io." },
+              { tag: "email + classroom", title: "Newsletters", desc: "Periodic updates on units and projects, sent by email and posted in Google Classroom." },
+              { tag: "daily hub", title: "Google Classroom", desc: "The primary hub for assignments and feedback. Class codes are shared the first week of school." },
+            ].map((c, i) => (
+              <Reveal key={c.title} delay={i * 0.08}>
+                <div className="h-full border border-border rounded-[10px] bg-white p-6">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-keyword-dim inline-block mb-3.5">
+                    {c.tag}
+                  </span>
+                  <h3 className="font-semibold text-ink mb-2">{c.title}</h3>
+                  <p className="text-sm text-text-soft">{c.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SIS */}
+      <section id="sis" className="py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="max-w-xl mb-10">
+            <span className="font-mono text-xs text-keyword-dim">{"// sis-portal"}</span>
+            <h2 className="text-2xl font-semibold mt-2">QuickSchools</h2>
+            <p className="text-text-soft mt-1">
+              Pinnacle Academy&apos;s Student Information System — one login
+              for grades, attendance, and progress all year.
+            </p>
+          </Reveal>
+          <Reveal className="max-w-xl border border-border rounded-[10px] bg-white p-7">
+            <Row ic="&#10003;">Real-time gradebook for every assignment and project</Row>
+            <Row ic="&#10003;">Daily attendance and tardy records</Row>
+            <Row ic="&#10003;">Direct messaging with your child&apos;s teachers</Row>
+            <Row ic="&#10003;">Login credentials distributed by the school office</Row>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ATTENDANCE */}
+      <section id="attendance" className="py-16 bg-paper-2">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="mb-10">
+            <span className="font-mono text-xs text-keyword-dim">{"// tardiness-and-absences"}</span>
+            <h2 className="text-2xl font-semibold mt-2">Attendance expectations</h2>
+          </Reveal>
+          <div className="grid md:grid-cols-2 gap-5">
+            <Reveal>
+              <div className="h-full border border-border rounded-[10px] bg-white p-7">
+                <h3 className="font-semibold text-ink mb-2">Tardiness</h3>
+                <p className="text-sm text-text-soft">
+                  Standard Pinnacle Academy policy applies: arriving after
+                  the bell counts as tardy. Repeated tardies follow the
+                  school&apos;s normal administrative process.
                 </p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  <strong>Instructor:</strong> Mr. Myradov
+              </div>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <div className="h-full border border-border rounded-[10px] bg-white p-7">
+                <h3 className="font-semibold text-ink mb-2">Absences</h3>
+                <p className="text-sm text-text-soft">
+                  Follows the school&apos;s standard attendance policy.
+                  Missed classwork is posted in Google Classroom — check
+                  there first, then message me for anything unclear.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ACADEMIC SUPPORT */}
+      <section id="support" className="py-16 bg-ink text-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="mb-10">
+            <span className="font-mono text-xs text-[#8FE0DA]">{"// extra-help"}</span>
+            <h2 className="text-2xl font-semibold mt-2 text-white">
+              Academic support &amp; homework help
+            </h2>
+          </Reveal>
+          <Reveal>
+            <div className="flex flex-wrap items-center gap-7 bg-[#1E2E4D] rounded-[10px] p-9">
+              <div>
+                <div className="font-mono text-xs uppercase text-comment tracking-wide">every week</div>
+                <div className="font-mono text-3xl md:text-4xl font-bold text-string mt-1">Mon &middot; 3:15&ndash;3:55 PM</div>
+              </div>
+              <div>
+                <h3 className="text-white font-semibold text-lg mb-1.5">
+                  Computer Lab &middot; Drop-in, no sign-up required
+                </h3>
+                <p className="text-[#B9C4DC] text-sm max-w-md">
+                  Open to every student, Grades 6&ndash;11. Great for
+                  finishing a module, debugging a project, or getting
+                  unstuck before a deadline &mdash; just show up.
                 </p>
               </div>
             </div>
-          </aside>
-          
-          {/* Main content */}
-          <main className="lg:col-span-3">
-            <article className="prose prose-lg max-w-none dark:prose-invert 
-              prose-headings:text-gray-900 dark:prose-headings:text-white 
-              prose-h2:text-2xl prose-h2:font-bold prose-h2:border-b prose-h2:border-gray-200 dark:prose-h2:border-gray-800 prose-h2:pb-2 prose-h2:mb-4
-              prose-h3:text-xl prose-h3:font-medium prose-h3:text-blue-700 dark:prose-h3:text-blue-400
-              prose-p:text-gray-700 dark:prose-p:text-gray-300 
-              prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
-              prose-li:my-1">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeSlug]}
-                components={{
-                  h2: ({node, ...props}) => {
-                    // Simple ID handling using rehype-slug
-                    if (props.id === 'curriculum') {
-                      return (
-                        <>
-                          <h2 {...props} />
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-                            <TopicCard 
-                              title="Foundations of Programming" 
-                              description="Introduction to computational thinking, basic programming concepts, and data structures"
-                            />
-                            <TopicCard 
-                              title="Web Development" 
-                              description="HTML, CSS, JavaScript fundamentals, and building interactive web applications"
-                            />
-                            <TopicCard 
-                              title="Advanced Programming" 
-                              description="Object-oriented programming, algorithms, and software development practices"
-                            />
-                            <TopicCard 
-                              title="Projects & Applications" 
-                              description="Collaborative coding projects, mobile app development, and game development basics"
-                            />
-                          </div>
-                        </>
-                      );
-                    }
-                    
-                    if (props.id === 'grading-policy') {
-                      return (
-                        <>
-                          <h2 {...props} />
-                          <div className="flex flex-wrap gap-2 my-6">
-                            <div className="grow border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
-                              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">40%</div>
-                              <div className="text-sm text-gray-700 dark:text-gray-300">Assignments & Labs</div>
-                            </div>
-                            <div className="grow border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
-                              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">30%</div>
-                              <div className="text-sm text-gray-700 dark:text-gray-300">Projects</div>
-                            </div>
-                            <div className="grow border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
-                              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">20%</div>
-                              <div className="text-sm text-gray-700 dark:text-gray-300">Quizzes & Tests</div>
-                            </div>
-                            <div className="grow border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
-                              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">10%</div>
-                              <div className="text-sm text-gray-700 dark:text-gray-300">Participation</div>
-                            </div>
-                          </div>
-                        </>
-                      );
-                    }
-                    
-                    return <h2 {...props} />;
-                  },
-                  h3: ({node, ...props}) => {
-                    // Simple styling for quarters
-                    if (props.children && 
-                        typeof props.children === 'string' && 
-                        props.children.includes('Quarter')) {
-                      return (
-                        <h3 
-                          {...props} 
-                          className="font-bold text-blue-700 dark:text-blue-400 mt-6 mb-3"
-                        />
-                      );
-                    }
-                    return <h3 {...props} />;
-                  }
-                }}
-              >
-                {classInfo.content}
-              </ReactMarkdown>
-            </article>
-            
-            {/* Contact Card */}
-            <div className="mt-10 p-6 border border-gray-200 dark:border-gray-800 rounded-lg">
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Questions about the class?</h3>
-              <p className="mb-4 text-gray-700 dark:text-gray-300">
-                Feel free to reach out to Mr. Myradov during office hours or by email.
-              </p>
-              <a href="mailto:instructor@pinnacleacademy.edu" className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
-                Contact Instructor
-              </a>
-            </div>
-          </main>
+          </Reveal>
         </div>
-      </div>
-    </div>
+      </section>
+
+      {/* CLUBS */}
+      <section id="clubs" className="py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="mb-10">
+            <span className="font-mono text-xs text-keyword-dim">{"// beyond-the-classroom"}</span>
+            <h2 className="text-2xl font-semibold mt-2">Clubs I&apos;m offering: Drone Club</h2>
+          </Reveal>
+          <Reveal className="max-w-2xl border border-border rounded-[10px] bg-white p-7">
+            <Row ic="&bull;" title="Open to">Interested students across Grades 6–11</Row>
+            <Row ic="&bull;" title="What we'll do">Flight fundamentals, drone programming, and hands-on build/repair challenges</Row>
+            <Row ic="&bull;" title="When & where">
+              <span className="font-mono text-xs text-rose border border-rose rounded-md px-2.5 py-1 inline-block">
+                Day/time to be confirmed — details posted in Google Classroom
+              </span>
+            </Row>
+            <Row ic="&bull;" title="Why join">A hands-on extension of this year&apos;s engineering &amp; emerging-tech focus</Row>
+          </Reveal>
+        </div>
+      </section>
+    </>
   );
 }

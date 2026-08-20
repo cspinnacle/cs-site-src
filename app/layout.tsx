@@ -1,21 +1,29 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const fraunces = Fraunces({
   subsets: ["latin"],
+  variable: "--font-fraunces",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const jbmono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-jbmono",
 });
 
 export const metadata: Metadata = {
-  title: "Computer Science at Pinnacle Academy",
-  description: "Class hub for students and families — newsletters, articles, and resources.",
+  title: "CS @ Pinnacle Academy",
+  description:
+    "Class hub for Computer Science at Pinnacle Academy — newsletters, articles, and class info for Grades 6–11.",
 };
 
 export default function RootLayout({
@@ -26,12 +34,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${fraunces.variable} ${inter.variable} ${jbmono.variable} antialiased`}
       >
         <Navigation />
-        <main className="lg:ml-64" role="main">
-          {children}
-        </main>
+        <main role="main">{children}</main>
+        <Footer />
       </body>
     </html>
   );

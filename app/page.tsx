@@ -1,198 +1,186 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import HeroSlider from './components/HeroSlider';
-import UpcomingEvents from './components/UpcomingEvents';
-import { getContentItems, EventItem } from '@/lib/content';
+import type { Metadata } from "next";
+import Link from "next/link";
+import Hero from "./components/Hero";
+import StatGrid from "./components/StatGrid";
+import EventCard from "./components/EventCard";
+import CurriculumPath from "./components/CurriculumPath";
+import Carousel, { CarouselItem } from "./components/Carousel";
+import Reveal from "./components/Reveal";
+import { getContentItems, excerpt, ContentItem, EventItem } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: 'Computer Science at Pinnacle Academy',
-  description: 'Class hub for students and families — newsletters, articles, and resources.',
+  title: "CS @ Pinnacle Academy",
+  description:
+    "Class hub for Computer Science at Pinnacle Academy — newsletters, articles, and class info for Grades 6–11.",
 };
 
 export default async function HomePage() {
-  const events = await getContentItems('events') as EventItem[];
-  
+  const events = (getContentItems("events") as EventItem[]).sort(
+    (a, b) => (a.eventDate > b.eventDate ? 1 : -1)
+  );
+
+  const articles = getContentItems("articles") as ContentItem[];
+  const newsletters = getContentItems("newsletters") as ContentItem[];
+  const feed: CarouselItem[] = [
+    ...articles.map((a) => ({
+      slug: `article-${a.slug}`,
+      href: `/articles/${a.slug}`,
+      title: a.title,
+      kind: "article" as const,
+      date: a.date,
+      meta: a.category,
+      excerpt: excerpt(a.content),
+    })),
+    ...newsletters.map((n) => ({
+      slug: `newsletter-${n.slug}`,
+      href: `/newsletters/${n.slug}`,
+      title: n.title,
+      kind: "newsletter" as const,
+      date: n.date,
+      meta: typeof n.week === "number" ? `Week ${n.week}` : undefined,
+      excerpt: excerpt(n.content),
+    })),
+  ]
+    .sort((a, b) => ((a.date || "") > (b.date || "") ? -1 : 1))
+    .slice(0, 8);
+
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
-      {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-6 py-16 lg:py-16 pt-20 lg:pt-16">
-        {/* Hero Section */}
-        <header className="border-b border-gray-200 dark:border-gray-800 pb-16 mb-16">
-          <div className="max-w-4xl mx-auto">
-            <HeroSlider />
-            
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight text-center">
-              CS at Pinnacle Academy
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-8 text-center">
-              Hi! I&apos;m Mr. Myradov. This site is our central hub for announcements, 
-              weekly newsletters, tutorials, and class resources.
+    <>
+      <Hero />
+
+      <StatGrid
+        stats={[
+          { value: 6, label: "grades taught" },
+          { value: 6, label: "distinct courses" },
+          { value: 4, suffix: "x", label: "AP CSA meets weekly" },
+          { value: 0, isNew: true, label: "AI integration, grades 6\u20139" },
+        ]}
+      />
+
+      {/* EVENTS */}
+      <section className="py-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="max-w-xl mb-12">
+            <span className="font-mono text-xs text-keyword-dim inline-flex items-center gap-2 mb-3.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-string inline-block" />
+              {"// whats-happening"}
+            </span>
+            <h2 className="text-3xl font-semibold">Upcoming events</h2>
+            <p className="text-text-soft mt-3.5">
+              A running log of what&apos;s next in class &mdash; field trips,
+              deadlines, and speakers.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                href="/newsletters/" 
-                className="px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
-              >
-                View Newsletters
-              </Link>
-              <Link 
-                href="/articles/" 
-                className="px-6 py-3 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg font-medium hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
-              >
-                Browse Articles
-              </Link>
-            </div>
+          </Reveal>
+          <div className="grid md:grid-cols-3 gap-5">
+            {events.map((event, i) => (
+              <EventCard key={event.slug} event={event} index={i} />
+            ))}
           </div>
-        </header>
+        </div>
+      </section>
 
-        {/* General Notifications and Announcements */}
-        <UpcomingEvents events={events} />
-        
-        {/* Main Grid */}
-        <section className="grid lg:grid-cols-3 gap-8 mb-16" aria-label="Main content sections">
-          {/* Weekly Newsletters - Large Card */}
-          <article className="lg:col-span-2">
-            <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-8 h-full hover:border-gray-300 dark:hover:border-gray-700 transition-colors group">
-              <div className="flex items-start justify-between mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors">
-                    Weekly Newsletters
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-400 text-lg">
-                    Stay up to date with class progress
-                  </p>
-                </div>
-                <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                  </svg>
-                </div>
-              </div>
-              <div className="space-y-4">
-                <div className="p-4 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-100 dark:border-gray-800">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">Latest Updates</p>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">Weekly assignments, announcements, and class progress</p>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500 dark:text-gray-400">Updated weekly</span>
-                  <Link href="/newsletters/" className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
-                    View all newsletters
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </article>
+      {/* LATEST */}
+      <section className="py-20 bg-paper-2">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="max-w-xl mb-12">
+            <span className="font-mono text-xs text-keyword-dim inline-flex items-center gap-2 mb-3.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-string inline-block" />
+              {"// latest"}
+            </span>
+            <h2 className="text-3xl font-semibold">Fresh off the feed</h2>
+            <p className="text-text-soft mt-3.5">
+              The newest articles and newsletters, straight from the site&apos;s
+              content folder.
+            </p>
+          </Reveal>
+          <Reveal>
+            <Carousel items={feed} />
+          </Reveal>
+        </div>
+      </section>
 
-          {/* Articles & Tutorials */}
-          <aside className="space-y-8">
-            <section className="border border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-gray-300 dark:hover:border-gray-700 transition-colors group">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-green-600 transition-colors">
-                    Articles & Tutorials
+      {/* CURRICULUM PATH */}
+      <section className="py-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="max-w-xl mb-12">
+            <span className="font-mono text-xs text-keyword-dim inline-flex items-center gap-2 mb-3.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-string inline-block" />
+              {"// the-progression"}
+            </span>
+            <h2 className="text-3xl font-semibold">
+              One program, six grades, one path
+            </h2>
+            <p className="text-text-soft mt-3.5">
+              Every course builds directly on the last &mdash; the same
+              reason we can go from Karel&apos;s grid world to a real
+              AI-powered app in six years.
+            </p>
+          </Reveal>
+          <Reveal>
+            <CurriculumPath />
+          </Reveal>
+          <Reveal className="text-center mt-12">
+            <Link
+              href="/class-info/#curriculum"
+              className="inline-flex items-center px-6 py-3 rounded-lg border-[1.5px] border-border-dark text-ink font-semibold hover:border-keyword transition-colors"
+            >
+              See the full curriculum &rarr;
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* EXPLORE */}
+      <section className="py-20 bg-paper-2">
+        <div className="max-w-6xl mx-auto px-6">
+          <Reveal className="max-w-xl mb-12">
+            <span className="font-mono text-xs text-keyword-dim inline-flex items-center gap-2 mb-3.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-string inline-block" />
+              {"// explore"}
+            </span>
+            <h2 className="text-3xl font-semibold">
+              Everything lives in three places
+            </h2>
+          </Reveal>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              {
+                href: "/class-info/",
+                tag: "class-info",
+                title: "Class Info",
+                desc: "Schedule, grading philosophy, classroom rules, the SIS portal, and clubs — the whole syllabus in one page.",
+              },
+              {
+                href: "/newsletters/",
+                tag: "newsletters",
+                title: "Newsletters",
+                desc: "Short weekly updates on what each grade is building right now.",
+              },
+              {
+                href: "/articles/",
+                tag: "articles",
+                title: "Articles",
+                desc: "Plain-language explainers on the concepts we cover — for students and curious parents alike.",
+              },
+            ].map((c, i) => (
+              <Reveal key={c.href} delay={i * 0.08}>
+                <Link
+                  href={c.href}
+                  className="block h-full border border-border rounded-[10px] bg-white p-7 hover:-translate-y-1 hover:border-keyword hover:shadow-[0_16px_32px_-18px_rgba(22,35,61,0.25)] transition-all"
+                >
+                  <span className="text-xs font-semibold uppercase tracking-wide text-keyword-dim inline-block mb-3.5">
+                    {c.tag}
+                  </span>
+                  <h3 className="text-lg font-semibold text-ink mb-2">
+                    {c.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    Programming guides and explanations
-                  </p>
-                </div>
-                <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-              </div>
-              <Link href="/articles/" className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
-                Browse tutorials
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </section>
-
-            {/* Quick Stats */}
-            <section className="border border-gray-200 dark:border-gray-800 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Class Info</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-800 last:border-b-0">
-                  <span className="text-gray-600 dark:text-gray-400 text-sm">Instructor</span>
-                  <span className="font-medium text-gray-900 dark:text-white text-sm">Mr. Myradov</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-800 last:border-b-0">
-                  <span className="text-gray-600 dark:text-gray-400 text-sm">Subject</span>
-                  <span className="font-medium text-gray-900 dark:text-white text-sm">Computer Science</span>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-gray-600 dark:text-gray-400 text-sm">School</span>
-                  <span className="font-medium text-gray-900 dark:text-white text-sm">Pinnacle Academy</span>
-                </div>
-              </div>
-            </section>
-          </aside>
-        </section>
-
-        {/* Feature Grid */}
-        <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16" aria-label="Feature highlights">
-          <article className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-            <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Weekly Updates</h4>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Regular newsletters with assignments and progress</p>
-          </article>
-          
-          <article className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-            <div className="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-              </svg>
-            </div>
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Coding Tutorials</h4>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Step-by-step programming guides and examples</p>
-          </article>
-          
-          <article className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-            <div className="w-12 h-12 rounded-lg bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-6 h-6 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Quick Reference</h4>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Easy-to-find resources and class materials</p>
-          </article>
-          
-          <article className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 text-center hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-            <div className="w-12 h-12 rounded-lg bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-6 h-6 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Always Updated</h4>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Fresh content and announcements regularly</p>
-          </article>
-        </section>
-
-        {/* Footer */}
-        <footer className="border-t border-gray-200 dark:border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 dark:text-gray-400 text-sm">
-              Computer Science @ Pinnacle Academy - Updated 2025
-            </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="/newsletters/" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
-                Newsletters
-              </Link>
-              <Link href="/articles/" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">
-                Articles
-              </Link>
-            </div>
+                  <p className="text-sm text-text-soft">{c.desc}</p>
+                </Link>
+              </Reveal>
+            ))}
           </div>
-        </footer>
-      </div>
-    </div>
+        </div>
+      </section>
+    </>
   );
 }

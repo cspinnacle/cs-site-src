@@ -1,100 +1,62 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
-import { getContentItems, getContentItem, ContentItem } from '@/lib/content';
-import { notFound } from 'next/navigation';
+import type { Metadata } from "next";
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
+import { getContentItems, getContentItem, ContentItem } from "@/lib/content";
+import { notFound } from "next/navigation";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  const newsletters = getContentItems('newsletters') as ContentItem[];
-  return newsletters.map((newsletter) => ({
-    slug: newsletter.slug,
-  }));
+  const newsletters = getContentItems("newsletters") as ContentItem[];
+  return newsletters.map((n) => ({ slug: n.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const newsletter = getContentItem('newsletters', slug) as ContentItem;
-  
-  if (!newsletter) {
-    return {
-      title: 'Newsletter Not Found',
-    };
-  }
-
+  const newsletter = getContentItem("newsletters", slug) as ContentItem;
+  if (!newsletter) return { title: "Newsletter Not Found" };
   return {
-    title: `${newsletter.title} - CS Newsletter`,
+    title: `${newsletter.title} — CS @ Pinnacle Academy`,
     description: `Weekly newsletter: ${newsletter.title}`,
   };
 }
 
 export default async function NewsletterPage({ params }: Props) {
   const { slug } = await params;
-  const newsletter = getContentItem('newsletters', slug) as ContentItem;
-
-  if (!newsletter) {
-    notFound();
-  }
+  const newsletter = getContentItem("newsletters", slug) as ContentItem;
+  if (!newsletter) notFound();
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
-      <div className="max-w-4xl mx-auto px-6 py-16 pt-20 lg:pt-16">
-        <header className="mb-12">
-          <nav className="mb-8">
-            <Link href="/newsletters/" className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Newsletters
-          </Link>
-          </nav>
-          
-          <div className="mb-8">
-            <div className="flex items-center space-x-3 mb-4">
-              {newsletter.week && (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200">
-                  Week {newsletter.week}
-                </span>
-              )}
-              {newsletter.date && (
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {new Date(newsletter.date).toLocaleDateString()}
-                </span>
-              )}
-            </div>
-            
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-              {newsletter.title}
-            </h1>
-          </div>
-        </header>
-
-        <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-blue-600 prose-code:text-pink-600 prose-img:max-w-full">
-          <ReactMarkdown 
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeSlug]}
-            components={{
-              img: ({node, ...props}) => (
-                <img {...props} className="mx-auto rounded-lg shadow-md my-6" />
-              ),
-              code: ({node, className, children, ...props}) => {
-                return (
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
-                )
-              }
-            }}
+    <>
+      <div className="bg-ink text-white pt-[110px] pb-11">
+        <div className="max-w-3xl mx-auto px-6">
+          <Link
+            href="/newsletters/"
+            className="font-mono text-sm text-comment hover:text-white inline-flex items-center gap-1.5 mb-6"
           >
-            {newsletter.content}
-          </ReactMarkdown>
-        </article>
+            &larr; back to newsletters
+          </Link>
+          <div className="flex items-center gap-3 mb-3 flex-wrap text-xs text-comment">
+            {typeof newsletter.week === "number" && <span>week: {newsletter.week}</span>}
+            {newsletter.date && (
+              <span>
+                {new Date(newsletter.date + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+              </span>
+            )}
+          </div>
+          <h1 className="text-white text-3xl md:text-4xl font-semibold">{newsletter.title}</h1>
+        </div>
       </div>
-    </div>
+
+      <article className="max-w-3xl mx-auto px-6 py-14 prose">
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSlug]}>
+          {newsletter.content}
+        </ReactMarkdown>
+      </article>
+    </>
   );
 }
