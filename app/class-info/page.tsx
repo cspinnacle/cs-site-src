@@ -50,12 +50,10 @@ const THREE_RS = [
   { c: "bg-string text-ink", t: "Readiness", d: "Arrive on time, prepared to focus, and ready to problem-solve — coding rewards patience and persistence." },
 ];
 
-function Row({ ic, title, children }: { ic: string; title?: string; children: React.ReactNode }) {
+function Row({ title, children }: { title?: string; children: React.ReactNode }) {
   return (
-    <div className="flex gap-4 items-start py-5 border-b border-border last:border-b-0">
-      <div className="w-10 h-10 rounded-full bg-ink text-white flex items-center justify-center font-mono text-xs font-semibold shrink-0">
-        {ic}
-      </div>
+    <div className="flex gap-4 items-start py-4 first:pt-0 last:pb-0">
+      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-keyword shrink-0" aria-hidden />
       <div>
         {title && <h4 className="text-ink font-semibold mb-0.5">{title}</h4>}
         <div className="text-sm text-text-soft">{children}</div>
@@ -67,7 +65,7 @@ function Row({ ic, title, children }: { ic: string; title?: string; children: Re
 export default function ClassInfoPage() {
   return (
     <>
-      <div className="bg-ink text-white pt-[110px] pb-11">
+      <div className="bg-ink text-white pt-[152px] pb-11">
         <div className="max-w-6xl mx-auto px-6">
           <div className="font-mono text-sm text-comment mb-3.5">
             cs/pinnacle/<span className="text-string">class-info.md</span>
@@ -85,18 +83,28 @@ export default function ClassInfoPage() {
       {/* TEACHER */}
       <section id="teacher" className="py-16">
         <div className="max-w-6xl mx-auto px-6">
-          <Reveal className="mb-10">
-            <span className="font-mono text-xs text-keyword-dim">{"// meet-your-teacher"}</span>
-            <h2 className="text-2xl font-semibold mt-2">Mr. Myradov</h2>
-            <p className="text-text-soft mt-1">Computer Science, Grades 6–11 · Computer Lab</p>
-          </Reveal>
-          <Reveal className="max-w-xl border border-border rounded-[10px] bg-white p-7">
-            <Row ic="ED" title="Engineering background">M.Eng. in Computer Technology</Row>
-            <Row ic="EX" title="Industry experience">Software engineering + ML/AI research</Row>
-            <Row ic="CS" title="Teaching load">Six CS courses across Grades 6–11 this year</Row>
-            <Row ic="@" title="Contact">
-              <a href="mailto:#" className="text-keyword-dim border-b border-keyword">
-                [Insert School Email Address]
+          <div className="grid md:grid-cols-[1fr_200px] gap-8 items-center mb-10">
+            <Reveal>
+              <span className="font-mono text-xs text-keyword-dim">{"// meet-your-teacher"}</span>
+              <h2 className="text-2xl font-semibold mt-2">Mr. Myradov</h2>
+              <p className="text-text-soft mt-1">Computer Science, Grades 6–11 · Computer Lab</p>
+            </Reveal>
+            <Reveal delay={0.1} className="hidden md:block">
+              <img
+                src="https://cdn.undraw.co/illustration/teacher_n0ow.svg"
+                alt=""
+                aria-hidden="true"
+                className="w-full h-auto"
+              />
+            </Reveal>
+          </div>
+          <Reveal className="max-w-xl bg-white p-7 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
+            <Row title="Engineering background">M.Eng. in Computer Technology</Row>
+            <Row title="Industry experience">Software engineering + ML/AI research</Row>
+            <Row title="Teaching load">Six CS courses across Grades 6–11 this year</Row>
+            <Row title="Contact">
+              <a href="mailto:gmyradov@paedu.org" className="text-keyword-dim border-b border-keyword">
+                gmyradov@paedu.org
               </a>
             </Row>
           </Reveal>
@@ -117,7 +125,7 @@ export default function ClassInfoPage() {
           <div className="grid md:grid-cols-3 gap-5">
             {CURRICULUM.map((c, i) => (
               <Reveal key={c.title} delay={i * 0.06}>
-                <div className="h-full border border-border rounded-[10px] bg-white p-6">
+                <div className="h-full bg-white p-6 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
                   <span className="text-xs font-semibold uppercase tracking-wide text-keyword-dim inline-block mb-3.5">
                     {c.tag}
                   </span>
@@ -127,7 +135,7 @@ export default function ClassInfoPage() {
               </Reveal>
             ))}
             <Reveal delay={0.3}>
-              <div className="h-full rounded-[10px] bg-ink p-6">
+              <div className="h-full bg-ink p-6 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
                 <span className="text-xs font-semibold uppercase tracking-wide text-[#8FE0DA] inline-block mb-3.5">
                   new this year
                 </span>
@@ -150,7 +158,7 @@ export default function ClassInfoPage() {
             <span className="font-mono text-xs text-keyword-dim">{"// how-often-we-meet"}</span>
             <h2 className="text-2xl font-semibold mt-2">Class schedule</h2>
           </Reveal>
-          <Reveal className="border border-border rounded-[10px] overflow-hidden">
+          <Reveal className="shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
             <table className="w-full border-collapse bg-white">
               <thead>
                 <tr>
@@ -186,10 +194,10 @@ export default function ClassInfoPage() {
             <span className="font-mono text-xs text-keyword-dim">{"// homework-and-reading-logs"}</span>
             <h2 className="text-2xl font-semibold mt-2">Our approach to at-home work</h2>
           </Reveal>
-          <Reveal className="max-w-2xl border border-border rounded-[10px] bg-white p-7">
-            <Row ic="1">Class time is built around hands-on coding and project work — most learning happens during class.</Row>
-            <Row ic="2">Homework is occasional: usually finishing an in-progress module or preparing materials for the next project.</Row>
-            <Row ic="3">There&apos;s no formal reading log for Computer Science — any at-home work is posted in Google Classroom with a clear due date.</Row>
+          <Reveal className="max-w-2xl bg-white p-7 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
+            <Row>Class time is built around hands-on coding and project work — most learning happens during class.</Row>
+            <Row>Homework is occasional: usually finishing an in-progress module or preparing materials for the next project.</Row>
+            <Row>There&apos;s no formal reading log for Computer Science — any at-home work is posted in Google Classroom with a clear due date.</Row>
           </Reveal>
         </div>
       </section>
@@ -204,7 +212,7 @@ export default function ClassInfoPage() {
           <div className="grid md:grid-cols-3 gap-5">
             {THREE_RS.map((r, i) => (
               <Reveal key={r.t} delay={i * 0.08}>
-                <div className="text-center border border-border rounded-[10px] bg-white p-9">
+                <div className="text-center bg-white p-9 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
                   <div className={`w-[70px] h-[70px] rounded-full flex items-center justify-center mx-auto mb-5 font-serif text-3xl font-bold ${r.c}`}>
                     R
                   </div>
@@ -220,10 +228,20 @@ export default function ClassInfoPage() {
       {/* STAY CONNECTED */}
       <section id="connect" className="py-16 bg-paper-2">
         <div className="max-w-6xl mx-auto px-6">
-          <Reveal className="mb-10">
-            <span className="font-mono text-xs text-keyword-dim">{"// staying-connected"}</span>
-            <h2 className="text-2xl font-semibold mt-2">Website, newsletters &amp; Google Classroom</h2>
-          </Reveal>
+          <div className="grid md:grid-cols-[1fr_200px] gap-8 items-center mb-10">
+            <Reveal>
+              <span className="font-mono text-xs text-keyword-dim">{"// staying-connected"}</span>
+              <h2 className="text-2xl font-semibold mt-2">Website, newsletters &amp; Google Classroom</h2>
+            </Reveal>
+            <Reveal delay={0.1} className="hidden md:block">
+              <img
+                src="https://cdn.undraw.co/illustration/join_niai.svg"
+                alt=""
+                aria-hidden="true"
+                className="w-full h-auto"
+              />
+            </Reveal>
+          </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
               { tag: "this site", title: "Class Website", desc: "Syllabus, yearly plan, and resources — always at cspinnacle.github.io." },
@@ -231,7 +249,7 @@ export default function ClassInfoPage() {
               { tag: "daily hub", title: "Google Classroom", desc: "The primary hub for assignments and feedback. Class codes are shared the first week of school." },
             ].map((c, i) => (
               <Reveal key={c.title} delay={i * 0.08}>
-                <div className="h-full border border-border rounded-[10px] bg-white p-6">
+                <div className="h-full bg-white p-6 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
                   <span className="text-xs font-semibold uppercase tracking-wide text-keyword-dim inline-block mb-3.5">
                     {c.tag}
                   </span>
@@ -247,19 +265,29 @@ export default function ClassInfoPage() {
       {/* SIS */}
       <section id="sis" className="py-16">
         <div className="max-w-6xl mx-auto px-6">
-          <Reveal className="max-w-xl mb-10">
-            <span className="font-mono text-xs text-keyword-dim">{"// sis-portal"}</span>
-            <h2 className="text-2xl font-semibold mt-2">QuickSchools</h2>
-            <p className="text-text-soft mt-1">
-              Pinnacle Academy&apos;s Student Information System — one login
-              for grades, attendance, and progress all year.
-            </p>
-          </Reveal>
-          <Reveal className="max-w-xl border border-border rounded-[10px] bg-white p-7">
-            <Row ic="&#10003;">Real-time gradebook for every assignment and project</Row>
-            <Row ic="&#10003;">Daily attendance and tardy records</Row>
-            <Row ic="&#10003;">Direct messaging with your child&apos;s teachers</Row>
-            <Row ic="&#10003;">Login credentials distributed by the school office</Row>
+          <div className="grid md:grid-cols-[1fr_200px] gap-8 items-center mb-10">
+            <Reveal className="max-w-xl">
+              <span className="font-mono text-xs text-keyword-dim">{"// sis-portal"}</span>
+              <h2 className="text-2xl font-semibold mt-2">QuickSchools</h2>
+              <p className="text-text-soft mt-1">
+                Pinnacle Academy&apos;s Student Information System — one login
+                for grades, attendance, and progress all year.
+              </p>
+            </Reveal>
+            <Reveal delay={0.1} className="hidden md:block">
+              <img
+                src="https://cdn.undraw.co/illustration/certificate_cqps.svg"
+                alt=""
+                aria-hidden="true"
+                className="w-full h-auto"
+              />
+            </Reveal>
+          </div>
+          <Reveal className="max-w-xl bg-white p-7 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
+            <Row>Real-time gradebook for every assignment and project</Row>
+            <Row>Daily attendance and tardy records</Row>
+            <Row>Direct messaging with your child&apos;s teachers</Row>
+            <Row>Login credentials distributed by the school office</Row>
           </Reveal>
         </div>
       </section>
@@ -273,7 +301,7 @@ export default function ClassInfoPage() {
           </Reveal>
           <div className="grid md:grid-cols-2 gap-5">
             <Reveal>
-              <div className="h-full border border-border rounded-[10px] bg-white p-7">
+              <div className="h-full bg-white p-7 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
                 <h3 className="font-semibold text-ink mb-2">Tardiness</h3>
                 <p className="text-sm text-text-soft">
                   Standard Pinnacle Academy policy applies: arriving after
@@ -283,7 +311,7 @@ export default function ClassInfoPage() {
               </div>
             </Reveal>
             <Reveal delay={0.08}>
-              <div className="h-full border border-border rounded-[10px] bg-white p-7">
+              <div className="h-full bg-white p-7 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
                 <h3 className="font-semibold text-ink mb-2">Absences</h3>
                 <p className="text-sm text-text-soft">
                   Follows the school&apos;s standard attendance policy.
@@ -306,19 +334,19 @@ export default function ClassInfoPage() {
             </h2>
           </Reveal>
           <Reveal>
-            <div className="flex flex-wrap items-center gap-7 bg-[#1E2E4D] rounded-[10px] p-9">
+            <div className="flex flex-wrap items-center gap-7 bg-[#1E2E4D] p-9 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
               <div>
                 <div className="font-mono text-xs uppercase text-comment tracking-wide">every week</div>
                 <div className="font-mono text-3xl md:text-4xl font-bold text-string mt-1">Mon &middot; 3:15&ndash;3:55 PM</div>
               </div>
               <div>
                 <h3 className="text-white font-semibold text-lg mb-1.5">
-                  Computer Lab &middot; Drop-in, no sign-up required
+                  Computer Lab &middot; Sign-up required
                 </h3>
                 <p className="text-[#B9C4DC] text-sm max-w-md">
-                  Open to every student, Grades 6&ndash;11. Great for
-                  finishing a module, debugging a project, or getting
-                  unstuck before a deadline &mdash; just show up.
+                  Open to every student, Grades 6&ndash;11. Reserve a spot
+                  using the sign-up sheet in Google Classroom by Friday
+                  afternoon so we can plan for space and one-on-one time.
                 </p>
               </div>
             </div>
@@ -329,19 +357,30 @@ export default function ClassInfoPage() {
       {/* CLUBS */}
       <section id="clubs" className="py-16">
         <div className="max-w-6xl mx-auto px-6">
-          <Reveal className="mb-10">
-            <span className="font-mono text-xs text-keyword-dim">{"// beyond-the-classroom"}</span>
-            <h2 className="text-2xl font-semibold mt-2">Clubs I&apos;m offering: Drone Club</h2>
-          </Reveal>
-          <Reveal className="max-w-2xl border border-border rounded-[10px] bg-white p-7">
-            <Row ic="&bull;" title="Open to">Interested students across Grades 6–11</Row>
-            <Row ic="&bull;" title="What we'll do">Flight fundamentals, drone programming, and hands-on build/repair challenges</Row>
-            <Row ic="&bull;" title="When & where">
-              <span className="font-mono text-xs text-rose border border-rose rounded-md px-2.5 py-1 inline-block">
+          <div className="grid md:grid-cols-[1fr_200px] gap-8 items-center mb-10">
+            <Reveal>
+              <span className="font-mono text-xs text-keyword-dim">{"// beyond-the-classroom"}</span>
+              <h2 className="text-2xl font-semibold mt-2">Clubs I&apos;m offering: Drone Club</h2>
+            </Reveal>
+            <Reveal delay={0.1} className="hidden md:block">
+              <img
+                src="https://cdn.undraw.co/illustration/approve_4ahx.svg"
+                alt=""
+                aria-hidden="true"
+                className="w-full h-auto"
+              />
+            </Reveal>
+          </div>
+          <Reveal className="max-w-2xl bg-white p-7 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)]">
+            <Row title="Open to">Interested students across Grades 6–11</Row>
+            <Row title="Requirements">Approval from Mr. Myradov is required before joining — see me in class or email to confirm a spot</Row>
+            <Row title="What we'll do">Flight fundamentals, drone programming, and hands-on build/repair challenges</Row>
+            <Row title="When & where">
+              <span className="font-mono text-xs text-rose bg-rose/10 px-2.5 py-1 inline-block">
                 Day/time to be confirmed — details posted in Google Classroom
               </span>
             </Row>
-            <Row ic="&bull;" title="Why join">A hands-on extension of this year&apos;s engineering &amp; emerging-tech focus</Row>
+            <Row title="Why join">A hands-on extension of this year&apos;s engineering &amp; emerging-tech focus</Row>
           </Reveal>
         </div>
       </section>

@@ -28,14 +28,6 @@ export default function ArticlesPage() {
 
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-6">
-          {articles.some((a) => a.sample) && (
-            <Reveal className="mb-9">
-              <p className="font-mono text-xs text-comment">
-                {"# sample content — replace in content/articles/"}
-              </p>
-            </Reveal>
-          )}
-
           {articles.length === 0 ? (
             <p className="text-text-soft text-center py-14">
               No articles yet. Check back soon!
@@ -50,9 +42,6 @@ export default function ArticlesPage() {
                   >
                     <h2 className="text-ink group-hover:text-keyword-dim transition-colors">
                       {a.title}
-                      {a.sample && (
-                        <span className="ml-2 font-body text-xs text-rose">&middot; sample</span>
-                      )}
                     </h2>
                     <span className="sm:ml-auto flex items-center gap-3 text-xs text-comment whitespace-nowrap">
                       {a.category && <span>category: {slugifyCategory(a.category)}</span>}

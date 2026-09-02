@@ -2,10 +2,11 @@
 title: "Week 1: Welcome Back to CS!"
 date: "2026-08-24"
 week: 1
-sample: true
 ---
 
 Hello students and families!
+
+![Illustration of a person energetically starting off on a new path](https://cdn.undraw.co/illustration/ready-set-go_wr4s.svg)
 
 Welcome back to Computer Science at Pinnacle Academy. Here's what each grade is kicking off with this week:
 
@@ -22,8 +23,10 @@ Every grade from 6th through 9th now includes a hands-on AI project — from bui
 ## A few reminders
 
 - Google Classroom codes went out this week — check your email
-- Academic support runs every **Monday, 3:15–3:55 PM** in the Computer Lab, drop-in
-- Drone Club kicks off soon — watch Google Classroom for the exact date
+- Academic support runs every **Monday, 3:15–3:55 PM** in the Computer Lab — sign up ahead of time using the sheet in Google Classroom
+- Drone Club kicks off soon and requires my approval to join — see me in class or email to confirm a spot, then watch Google Classroom for the exact date
+
+**For 6th grade families:** [Hour of Code – Introduction](https://www.youtube.com/watch?v=bQilo5ecSX4) (Code.org, ~5 min) is a nice at-home preview of the puzzle-based thinking behind Karel Adventures.
 
 Questions? Reach out anytime.
 

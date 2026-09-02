@@ -11,7 +11,6 @@ export interface ContentItem {
   content: string;
   week?: number;
   category?: string;
-  sample?: boolean;
 }
 
 export interface EventItem {
@@ -22,7 +21,6 @@ export interface EventItem {
   content: string;
   type: string;        // Type of event: 'event', 'deadline', 'field-trip', etc.
   importance: string;  // 'high', 'medium', or 'low'
-  sample?: boolean;
 }
 
 export function getContentItems(folder: 'newsletters' | 'articles' | 'events' | 'info'): ContentItem[] | EventItem[] {
@@ -50,7 +48,6 @@ export function getContentItems(folder: 'newsletters' | 'articles' | 'events' | 
           eventDate: data.eventDate || '',
           type: data.type || 'event',
           importance: data.importance || 'medium',
-          sample: data.sample || false,
         } as EventItem;
       } else {
         return {
@@ -60,7 +57,6 @@ export function getContentItems(folder: 'newsletters' | 'articles' | 'events' | 
           date: data.date || '',
           week: data.week,
           category: data.category,
-          sample: data.sample || false,
         } as ContentItem;
       }
     });
@@ -99,7 +95,6 @@ export function getContentItem(folder: 'newsletters' | 'articles' | 'events' | '
         eventDate: data.eventDate || '',
         type: data.type || 'event',
         importance: data.importance || 'medium',
-        sample: data.sample || false,
       } as EventItem;
     } else {
       return {
@@ -109,7 +104,6 @@ export function getContentItem(folder: 'newsletters' | 'articles' | 'events' | '
         date: data.date || '',
         week: data.week,
         category: data.category,
-        sample: data.sample || false,
       } as ContentItem;
     }
   } catch {

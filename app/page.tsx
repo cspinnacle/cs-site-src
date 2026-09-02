@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import StatGrid from "./components/StatGrid";
 import EventCard from "./components/EventCard";
 import CurriculumPath from "./components/CurriculumPath";
+import LearningTopics from "./components/LearningTopics";
 import Carousel, { CarouselItem } from "./components/Carousel";
 import Reveal from "./components/Reveal";
 import { getContentItems, excerpt, ContentItem, EventItem } from "@/lib/content";
@@ -46,31 +47,43 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero />
+      <div className="h-screen flex flex-col">
+        <Hero />
 
-      <StatGrid
-        stats={[
-          { value: 6, label: "grades taught" },
-          { value: 6, label: "distinct courses" },
-          { value: 4, suffix: "x", label: "AP CSA meets weekly" },
-          { value: 0, isNew: true, label: "AI integration, grades 6\u20139" },
-        ]}
-      />
+        <StatGrid
+          stats={[
+            { value: 6, label: "grades taught" },
+            { value: 6, label: "distinct courses" },
+            { value: 4, suffix: "x", label: "AP CSA meets weekly" },
+            { value: 0, isNew: true, label: "AI integration, grades 6\u20139" },
+          ]}
+        />
+      </div>
 
       {/* EVENTS */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <Reveal className="max-w-xl mb-12">
-            <span className="font-mono text-xs text-keyword-dim inline-flex items-center gap-2 mb-3.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-string inline-block" />
-              {"// whats-happening"}
-            </span>
-            <h2 className="text-3xl font-semibold">Upcoming events</h2>
-            <p className="text-text-soft mt-3.5">
-              A running log of what&apos;s next in class &mdash; field trips,
-              deadlines, and speakers.
-            </p>
-          </Reveal>
+          <div className="grid md:grid-cols-[1fr_200px] gap-8 items-center mb-12">
+            <Reveal className="max-w-xl">
+              <span className="font-mono text-xs text-keyword-dim inline-flex items-center gap-2 mb-3.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-string inline-block" />
+                {"// whats-happening"}
+              </span>
+              <h2 className="text-3xl font-semibold">Upcoming events</h2>
+              <p className="text-text-soft mt-3.5">
+                A running log of what&apos;s next in class &mdash; field trips,
+                deadlines, and speakers.
+              </p>
+            </Reveal>
+            <Reveal delay={0.1} className="hidden md:block">
+              <img
+                src="https://cdn.undraw.co/illustration/booking_8vl5.svg"
+                alt=""
+                aria-hidden="true"
+                className="w-full h-auto"
+              />
+            </Reveal>
+          </div>
           <div className="grid md:grid-cols-3 gap-5">
             {events.map((event, i) => (
               <EventCard key={event.slug} event={event} index={i} />
@@ -122,16 +135,50 @@ export default async function HomePage() {
           <Reveal className="text-center mt-12">
             <Link
               href="/class-info/#curriculum"
-              className="inline-flex items-center px-6 py-3 rounded-lg border-[1.5px] border-border-dark text-ink font-semibold hover:border-keyword transition-colors"
+              className="group inline-flex items-center gap-1.5 text-ink font-semibold hover:text-keyword-dim transition-colors"
             >
-              See the full curriculum &rarr;
+              See the full curriculum
+              <span className="transition-transform group-hover:translate-x-1">&rarr;</span>
             </Link>
           </Reveal>
         </div>
       </section>
 
-      {/* EXPLORE */}
+      {/* LEARNING TOPICS */}
       <section className="py-20 bg-paper-2">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid md:grid-cols-[1fr_220px] gap-10 items-center mb-12">
+            <Reveal className="max-w-xl">
+              <span className="font-mono text-xs text-keyword-dim inline-flex items-center gap-2 mb-3.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-string inline-block" />
+                {"// what-youll-learn"}
+              </span>
+              <h2 className="text-3xl font-semibold">
+                Concepts that show up again and again
+              </h2>
+              <p className="text-text-soft mt-3.5">
+                Different grades, different languages, same underlying ideas
+                — here&apos;s the running list, with deeper reads where
+                we&apos;ve written one.
+              </p>
+            </Reveal>
+            <Reveal delay={0.1} className="hidden md:block">
+              <img
+                src="https://cdn.undraw.co/illustration/continuous-learning_a1ld.svg"
+                alt=""
+                aria-hidden="true"
+                className="w-full h-auto"
+              />
+            </Reveal>
+          </div>
+          <Reveal>
+            <LearningTopics />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* EXPLORE */}
+      <section className="py-20">
         <div className="max-w-6xl mx-auto px-6">
           <Reveal className="max-w-xl mb-12">
             <span className="font-mono text-xs text-keyword-dim inline-flex items-center gap-2 mb-3.5">
@@ -166,7 +213,7 @@ export default async function HomePage() {
               <Reveal key={c.href} delay={i * 0.08}>
                 <Link
                   href={c.href}
-                  className="block h-full border border-border rounded-[10px] bg-white p-7 hover:-translate-y-1 hover:border-keyword hover:shadow-[0_16px_32px_-18px_rgba(22,35,61,0.25)] transition-all"
+                  className="block h-full bg-white p-7 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(22,35,61,0.16)] transition-all"
                 >
                   <span className="text-xs font-semibold uppercase tracking-wide text-keyword-dim inline-block mb-3.5">
                     {c.tag}

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const SECTIONS = [
   { id: "teacher", label: "teacher" },
@@ -17,7 +18,6 @@ const SECTIONS = [
 
 export default function SubNav() {
   const [active, setActive] = useState("teacher");
-  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const targets = SECTIONS.map((s) => document.getElementById(s.id)).filter(
@@ -39,25 +39,32 @@ export default function SubNav() {
   }, []);
 
   return (
-    <nav
-      ref={ref}
-      className="sticky top-[64px] z-40 bg-paper/95 backdrop-blur-sm border-b border-border"
-    >
-      <div className="max-w-6xl mx-auto flex gap-6 overflow-x-auto px-6 py-3.5">
-        {SECTIONS.map((s) => (
-          <a
-            key={s.id}
-            href={`#${s.id}`}
-            className={`font-mono text-xs whitespace-nowrap pb-1 border-b-2 transition-colors ${
-              active === s.id
-                ? "text-ink border-string"
-                : "text-text-soft border-transparent hover:text-ink"
-            }`}
-          >
-            {s.label}
-          </a>
-        ))}
+    <div className="fixed top-20 inset-x-4 md:inset-x-8 z-40">
+      <div className="max-w-6xl mx-auto flex items-center justify-start xl:justify-center gap-2 overflow-x-auto px-1 py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {SECTIONS.map((s) => {
+          const isActive = active === s.id;
+          return (
+            <a
+              key={s.id}
+              href={`#${s.id}`}
+              className={`relative shrink-0 font-mono text-xs whitespace-nowrap px-3.5 py-1.5 rounded-full transition-colors ${
+                isActive
+                  ? "text-white"
+                  : "bg-paper/70 backdrop-blur-md border border-white/50 text-text-soft hover:text-ink hover:bg-paper/90"
+              }`}
+            >
+              {isActive && (
+                <motion.span
+                  layoutId="subnav-active-pill"
+                  className="absolute inset-0 bg-ink rounded-full"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10">{s.label}</span>
+            </a>
+          );
+        })}
       </div>
-    </nav>
+    </div>
   );
 }

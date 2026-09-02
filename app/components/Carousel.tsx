@@ -57,7 +57,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
           <Link
             key={item.slug}
             href={item.href}
-            className="group snap-start shrink-0 w-[260px] sm:w-[300px] border border-border rounded-[10px] bg-white p-6 hover:-translate-y-1 hover:border-keyword hover:shadow-[0_16px_32px_-18px_rgba(22,35,61,0.25)] transition-all"
+            className="group snap-start shrink-0 w-[260px] sm:w-[300px] bg-white p-6 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(22,35,61,0.16)] transition-all"
           >
             <span
               className={`text-xs font-semibold uppercase tracking-wide ${
@@ -101,7 +101,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
             onClick={() => scrollToIndex(Math.max(0, active - 1))}
             aria-label="Previous"
             disabled={active === 0}
-            className="w-9 h-9 rounded-full border border-border text-ink flex items-center justify-center hover:border-keyword disabled:opacity-30 disabled:hover:border-border transition-colors"
+            className="w-9 h-9 rounded-full bg-paper-2 text-ink flex items-center justify-center hover:bg-border disabled:opacity-30 disabled:hover:bg-paper-2 transition-colors"
           >
             &larr;
           </button>
@@ -109,7 +109,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
             onClick={() => scrollToIndex(Math.min(items.length - 1, active + 1))}
             aria-label="Next"
             disabled={active === items.length - 1}
-            className="w-9 h-9 rounded-full border border-border text-ink flex items-center justify-center hover:border-keyword disabled:opacity-30 disabled:hover:border-border transition-colors"
+            className="w-9 h-9 rounded-full bg-paper-2 text-ink flex items-center justify-center hover:bg-border disabled:opacity-30 disabled:hover:bg-paper-2 transition-colors"
           >
             &rarr;
           </button>

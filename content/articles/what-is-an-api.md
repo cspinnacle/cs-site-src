@@ -2,7 +2,6 @@
 title: "What Is an API, Really?"
 date: "2026-07-28"
 category: "Concept Explainer"
-sample: true
 ---
 
 "API" comes up constantly in programming, and the definition ("Application Programming Interface") doesn't help much. Here's the version that actually clicks.
@@ -11,7 +10,23 @@ sample: true
 
 Think of a restaurant. You don't walk into the kitchen and cook your own food — you look at the menu, order a dish by name, and the kitchen figures out how to make it. The menu is the interface: it tells you what you can ask for, without you needing to know how it's made.
 
+![Illustration of a person ordering food from a menu at a counter](https://cdn.undraw.co/illustration/order-food_c92i.svg)
+
 An API works the same way. It's a defined list of requests a program will accept — "give me today's weather for this city" — and a promise about what you'll get back, without you needing to know how that program works internally.
+
+Concretely, "ordering off the menu" often looks like this:
+
+```
+Request:  GET /weather?city=Boston
+
+Response: {
+  "city": "Boston",
+  "temperature": 68,
+  "condition": "Cloudy"
+}
+```
+
+You never see the sensors, satellites, or forecasting models behind that response — you asked a specific question in the API's expected format, and it handed back a specific, predictable answer. That's the entire deal.
 
 ## Where students meet this
 

@@ -49,6 +49,10 @@ html {
   scroll-behavior: smooth;
 }
 
+section[id] {
+  scroll-margin-top: 144px;
+}
+
 body {
   background: var(--color-paper);
   color: var(--color-text);
@@ -110,18 +114,41 @@ h1, h2, h3 {
   animation: blink 1s steps(1) infinite;
 }
 
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 4px 14px -2px rgba(22, 35, 61, 0.35), 0 0 0 0 rgba(47, 166, 166, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 14px -2px rgba(22, 35, 61, 0.35), 0 0 22px 6px rgba(47, 166, 166, 0.4);
+  }
+  75% {
+    box-shadow: 0 4px 14px -2px rgba(22, 35, 61, 0.35), 0 0 22px 6px rgba(227, 165, 72, 0.45);
+  }
+}
+.btn-glow {
+  animation: glow-pulse 3.5s ease-in-out infinite;
+}
+.btn-glow:hover,
+.btn-glow:focus-visible {
+  animation-duration: 1.4s;
+}
+
 /* Prose (markdown-rendered newsletters/articles) */
 .prose {
   color: var(--color-text-soft);
+}
+.prose p {
+  margin: 1rem 0;
+}
+.prose > *:first-child {
+  margin-top: 0;
 }
 .prose h1, .prose h2, .prose h3 {
   color: var(--color-ink);
   font-family: var(--font-display), Georgia, serif;
 }
 .prose h2 {
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 0.4rem;
-  margin-top: 2rem;
+  margin-top: 2.25rem;
 }
 .prose a {
   color: var(--color-keyword-dim);
@@ -130,10 +157,11 @@ h1, h2, h3 {
 }
 .prose pre {
   background: var(--color-ink);
-  border: 1px solid var(--color-border-dark);
-  border-radius: 10px;
+  border-radius: 16px;
   padding: 1.1rem;
+  margin: 1.25rem 0;
   overflow-x: auto;
+  box-shadow: 0 4px 24px -8px rgba(22, 35, 61, 0.15);
 }
 .prose code {
   background: var(--color-paper-2);
@@ -151,12 +179,30 @@ h1, h2, h3 {
   font-weight: normal;
 }
 .prose img {
-  border-radius: 10px;
+  border-radius: 16px;
   margin: 1.5rem auto;
 }
 .prose ul, .prose ol {
-  margin-left: 1.25rem;
+  margin: 1rem 0 1rem 1.25rem;
 }
 .prose li {
   margin: 0.3rem 0;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.9rem;
+}
+.prose th {
+  text-align: left;
+  color: var(--color-ink);
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  background: var(--color-paper-2);
+}
+.prose td {
+  padding: 0.6rem 1rem;
+  border-top: 1px solid var(--color-border);
+  vertical-align: top;
 }

@@ -4,9 +4,9 @@ date: "2024-09-03"
 category: "fundamentals"
 ---
 
-# Understanding Variables in Programming
-
 Variables are one of the most fundamental concepts in programming. Think of them as labeled boxes where you can store information.
+
+![Illustration of a person organizing labeled boxes of data on shelves](https://cdn.undraw.co/illustration/coding_joxb.svg)
 
 ## What is a Variable?
 

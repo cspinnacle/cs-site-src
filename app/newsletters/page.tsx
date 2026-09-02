@@ -28,14 +28,6 @@ export default function NewslettersPage() {
 
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-6">
-          {newsletters.some((n) => n.sample) && (
-            <Reveal className="mb-9">
-              <p className="font-mono text-xs text-comment">
-                {"# sample content — replace in content/newsletters/"}
-              </p>
-            </Reveal>
-          )}
-
           {newsletters.length === 0 ? (
             <p className="text-text-soft text-center py-14">
               No newsletters yet. Check back soon!
@@ -50,9 +42,6 @@ export default function NewslettersPage() {
                   >
                     <h2 className="text-ink group-hover:text-keyword-dim transition-colors">
                       {n.title}
-                      {n.sample && (
-                        <span className="ml-2 font-body text-xs text-rose">&middot; sample</span>
-                      )}
                     </h2>
                     <span className="sm:ml-auto flex items-center gap-3 text-xs text-comment whitespace-nowrap">
                       {typeof n.week === "number" && <span>week: {n.week}</span>}

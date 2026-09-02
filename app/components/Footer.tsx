@@ -24,8 +24,8 @@ export default function Footer() {
           <div>
             <h4 className="font-mono text-sm text-white mb-4">Contact</h4>
             <p className="text-sm">
-              <a href="mailto:#" className="hover:text-white">
-                [Insert School Email Address]
+              <a href="mailto:gmyradov@paedu.org" className="hover:text-white">
+                gmyradov@paedu.org
               </a>
             </p>
             <p className="text-sm mt-2">Computer Lab &middot; Pinnacle Academy</p>

@@ -2,10 +2,11 @@
 title: "Why Computers Only Understand 0s and 1s"
 date: "2026-07-20"
 category: "Concept Explainer"
-sample: true
 ---
 
 Every photo, song, and game you've ever seen on a screen is, underneath, a very long string of 0s and 1s. That sounds absurd until you see why it's actually the simplest option, not the strangest one.
+
+![Illustration of a person standing next to a giant lightning bolt and circuitry](https://cdn.undraw.co/illustration/electricity_7985.svg)
 
 ## Why not just use letters and numbers directly?
 
@@ -16,6 +17,19 @@ A computer is really a box of billions of tiny switches. A switch has exactly tw
 One bit can only tell you two things. But eight bits together (a **byte**) can represent 256 different patterns — more than enough to cover every letter, digit, and punctuation mark on a keyboard. String enough bytes together in an agreed-upon pattern, and you can represent a whole paragraph, a photograph, or a song.
 
 The letter "A", for example, is stored as the pattern `01000001` almost everywhere in the world, by an old agreement called ASCII. Your computer isn't "thinking" in letters at all — it's just following that lookup table at incredible speed.
+
+You can see this yourself in three lines of Python:
+
+```python
+# Turn a letter into its binary pattern
+letter = "A"
+print(bin(ord(letter)))   # 0b1000001  <- that's 65 in binary
+
+# Go the other direction: binary back to a letter
+print(chr(0b1000001))     # A
+```
+
+`ord()` looks up a character's position in that agreed-upon table (65 for "A"), and `bin()` just rewrites that number in base 2 instead of base 10. Nothing magic — just a different way of writing the same number.
 
 ## Where students meet this
 

@@ -19,7 +19,7 @@ export default function Navigation() {
   return (
     <header className="fixed top-4 inset-x-4 md:inset-x-8 z-50">
       <div className="max-w-6xl mx-auto relative">
-        <nav className="bg-paper/95 backdrop-blur-sm rounded-full shadow-[0_8px_30px_-4px_rgba(22,35,61,0.18)] border border-border px-5 py-2.5 flex items-center justify-between">
+        <nav className="bg-paper/95 backdrop-blur-sm rounded-full shadow-[0_8px_30px_-4px_rgba(22,35,61,0.18)] px-5 py-2.5 flex items-center justify-between">
           <Link href="/" className="font-mono text-sm text-ink font-medium inline-flex items-center">
             cs<span className="text-string">/</span>pinnacle<span className="caret ml-0.5" />
           </Link>
@@ -44,7 +44,7 @@ export default function Navigation() {
             </ul>
             <Link
               href="/newsletters/"
-              className="inline-flex items-center px-4 py-2 rounded-full bg-ink text-white text-sm font-semibold hover:-translate-y-0.5 transition-transform"
+              className="btn-glow inline-flex items-center px-4 py-2 rounded-full bg-ink text-white text-sm font-semibold hover:-translate-y-0.5 transition-transform"
             >
               Newsletters
             </Link>
@@ -53,7 +53,7 @@ export default function Navigation() {
           <div className="flex items-center gap-2 md:hidden">
             <Link
               href="/newsletters/"
-              className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-ink text-white text-sm font-semibold"
+              className="btn-glow inline-flex items-center px-3.5 py-1.5 rounded-full bg-ink text-white text-sm font-semibold"
             >
               Newsletters
             </Link>
@@ -89,14 +89,14 @@ export default function Navigation() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden absolute top-full inset-x-0 mt-2 bg-paper rounded-2xl shadow-[0_8px_30px_-4px_rgba(22,35,61,0.18)] border border-border overflow-hidden"
+              className="md:hidden absolute top-full inset-x-0 mt-2 bg-paper shadow-[0_8px_30px_-4px_rgba(22,35,61,0.18)]"
             >
               {navigation.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`block px-6 py-4 text-sm border-t border-border first:border-t-0 ${
+                  className={`block px-6 py-4 text-sm ${
                     isActive(item.href) ? "text-ink font-semibold" : "text-text-soft"
                   }`}
                 >

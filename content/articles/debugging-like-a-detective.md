@@ -2,10 +2,11 @@
 title: "Debugging Like a Detective, Not a Guesser"
 date: "2026-08-12"
 category: "Study Skills"
-sample: true
 ---
 
 The single biggest difference between a frustrated student and a confident one isn't talent — it's how they react when the code breaks. Here's the approach we teach in class.
+
+![Illustration of a person surrounded by oversized bugs crawling out of a laptop screen](https://cdn.undraw.co/illustration/fixing-bugs_1ytu.svg)
 
 ## Stop guessing, start narrowing
 
@@ -22,6 +23,31 @@ That third question is the one students skip, and it's the one that actually fin
 ## Print statements are not cheating
 
 Adding `print("here")` or `console.log(x)` between lines to see what a variable actually holds isn't a hack — it's a real technique professional engineers use daily. If you don't know what a value is, ask the program to tell you.
+
+Here's what that looks like in practice — a function that's supposed to average a list of test scores, but keeps returning a suspiciously small number:
+
+```python
+def average(scores):
+    total = 0
+    for score in scores:
+        total = score  # bug: overwrites total instead of adding to it
+    return total / len(scores)
+
+print(average([80, 90, 100]))  # expected 90, got 33.33...
+```
+
+Instead of staring at it, add one line to see what's actually happening inside the loop:
+
+```python
+def average(scores):
+    total = 0
+    for score in scores:
+        total = score
+        print("total is now:", total)  # <- the detective's question
+    return total / len(scores)
+```
+
+The printed trail shows `total` snapping to each score instead of accumulating — which points straight at `total = score` needing to be `total += score`. The bug wasn't found by staring harder; it was found by asking the program a direct question.
 
 ## Where students meet this
 

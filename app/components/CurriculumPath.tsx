@@ -25,7 +25,7 @@ export default function CurriculumPath() {
         >
           <div
             className={`w-[54px] h-[54px] rounded-full flex items-center justify-center mx-auto mb-3.5 font-mono font-semibold text-sm border-[3px] border-paper ${
-              n.current ? "bg-string text-ink" : "bg-ink text-white"
+              n.current ? "bg-string text-ink btn-glow" : "bg-ink text-white"
             }`}
           >
             {n.label}
