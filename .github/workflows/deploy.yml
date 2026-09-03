@@ -36,7 +36,7 @@ jobs:
         clean: true                                  # Remove files from previous deployment
         git-config-name: GitHub Actions Bot          # Set a name for the committer
         git-config-email: noreply@github.com         # Set an email for the committer
-        commit-message: "Deploy from cs-site-src: ${{ github.event.head_commit.message || 'Update site' }}"  # Custom commit message
+        commit-message: "Deploy from cs-site-src"  # Keep message single-line to avoid shell argument parsing issues
         clean-exclude: |                             # Files to preserve during clean
           .nojekyll
           CNAME
