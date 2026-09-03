@@ -8,14 +8,14 @@ export default function Hero() {
       <NeuralCanvas />
       <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
         <Reveal>
-          <h1 className="text-ink text-[2.6rem] md:text-[4rem] leading-[1.1] font-semibold">
-            Your hub for code, projects, and big ideas.
+          <h1 className="text-heading text-[2.6rem] md:text-[4rem] leading-[1.1] font-semibold">
+            Your home for code, projects, and big ideas.
           </h1>
         </Reveal>
         <Reveal delay={0.12} className="mt-9">
           <Link
             href="/class-info/"
-            className="btn-glow inline-flex items-center px-7 py-3.5 rounded-full bg-ink text-white font-semibold hover:-translate-y-0.5 transition-transform"
+            className="btn-hard inline-flex items-center px-7 py-3.5 rounded-full bg-ink text-white font-semibold"
           >
             View class info
           </Link>

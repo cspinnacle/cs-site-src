@@ -23,8 +23,20 @@ const jbmono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "CS @ Pinnacle Academy",
   description:
-    "Class hub for Computer Science at Pinnacle Academy — newsletters, articles, and class info for Grades 6–11.",
+    "Computer Science at Pinnacle Academy — newsletters, articles, and class info for Grades 6–11.",
 };
+
+const THEME_INIT_SCRIPT = `
+(function () {
+  try {
+    var stored = localStorage.getItem("theme");
+    var theme = stored === "light" || stored === "dark"
+      ? stored
+      : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  } catch (e) {}
+})();
+`;
 
 export default function RootLayout({
   children,
@@ -32,7 +44,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body
         className={`${fraunces.variable} ${inter.variable} ${jbmono.variable} antialiased`}
       >

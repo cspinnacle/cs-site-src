@@ -22,7 +22,8 @@ const MAX_NODES = 70;
 const MIN_NODES = 22;
 const LINK_DIST = 150;
 
-const INK = "22, 35, 61";
+const LINK_LIGHT = "22, 35, 61";
+const LINK_DARK = "220, 225, 235";
 const KEYWORD = "47, 166, 166";
 const STRING = "227, 165, 72";
 
@@ -36,6 +37,8 @@ export default function NeuralCanvas() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const linkColor = document.documentElement.getAttribute("data-theme") === "dark" ? LINK_DARK : LINK_LIGHT;
+    const linkOpacity = document.documentElement.getAttribute("data-theme") === "dark" ? 0.1 : 0.16;
 
     let width = 0;
     let height = 0;
@@ -84,7 +87,7 @@ export default function NeuralCanvas() {
           const b = nodes[j];
           const dist = Math.hypot(a.x - b.x, a.y - b.y);
           if (dist < LINK_DIST) {
-            ctx!.strokeStyle = `rgba(${INK}, ${(1 - dist / LINK_DIST) * 0.16})`;
+            ctx!.strokeStyle = `rgba(${linkColor}, ${(1 - dist / LINK_DIST) * linkOpacity})`;
             ctx!.lineWidth = 1;
             ctx!.beginPath();
             ctx!.moveTo(a.x, a.y);

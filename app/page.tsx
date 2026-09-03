@@ -12,7 +12,7 @@ import { getContentItems, excerpt, ContentItem, EventItem } from "@/lib/content"
 export const metadata: Metadata = {
   title: "CS @ Pinnacle Academy",
   description:
-    "Class hub for Computer Science at Pinnacle Academy — newsletters, articles, and class info for Grades 6–11.",
+    "Computer Science at Pinnacle Academy — newsletters, articles, and class info for Grades 6–11.",
 };
 
 export default async function HomePage() {
@@ -63,7 +63,7 @@ export default async function HomePage() {
       {/* EVENTS */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-[1fr_200px] gap-8 items-center mb-12">
+          <div className="grid md:grid-cols-[1fr_320px] gap-8 items-center mb-12">
             <Reveal className="max-w-xl">
               <span className="font-mono text-xs text-keyword-dim inline-flex items-center gap-2 mb-3.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-string inline-block" />
@@ -80,7 +80,7 @@ export default async function HomePage() {
                 src="https://cdn.undraw.co/illustration/booking_8vl5.svg"
                 alt=""
                 aria-hidden="true"
-                className="w-full h-auto"
+                className="illustration w-full h-auto"
               />
             </Reveal>
           </div>
@@ -135,7 +135,7 @@ export default async function HomePage() {
           <Reveal className="text-center mt-12">
             <Link
               href="/class-info/#curriculum"
-              className="group inline-flex items-center gap-1.5 text-ink font-semibold hover:text-keyword-dim transition-colors"
+              className="group inline-flex items-center gap-1.5 text-heading font-semibold hover:text-keyword-dim transition-colors"
             >
               See the full curriculum
               <span className="transition-transform group-hover:translate-x-1">&rarr;</span>
@@ -147,7 +147,7 @@ export default async function HomePage() {
       {/* LEARNING TOPICS */}
       <section className="py-20 bg-paper-2">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-[1fr_220px] gap-10 items-center mb-12">
+          <div className="grid md:grid-cols-[1fr_340px] gap-10 items-center mb-12">
             <Reveal className="max-w-xl">
               <span className="font-mono text-xs text-keyword-dim inline-flex items-center gap-2 mb-3.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-string inline-block" />
@@ -167,7 +167,7 @@ export default async function HomePage() {
                 src="https://cdn.undraw.co/illustration/continuous-learning_a1ld.svg"
                 alt=""
                 aria-hidden="true"
-                className="w-full h-auto"
+                className="illustration w-full h-auto"
               />
             </Reveal>
           </div>
@@ -213,12 +213,12 @@ export default async function HomePage() {
               <Reveal key={c.href} delay={i * 0.08}>
                 <Link
                   href={c.href}
-                  className="block h-full bg-white p-7 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(22,35,61,0.16)] transition-all"
+                  className="block h-full bg-surface p-7 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(22,35,61,0.16)] transition-all"
                 >
                   <span className="text-xs font-semibold uppercase tracking-wide text-keyword-dim inline-block mb-3.5">
                     {c.tag}
                   </span>
-                  <h3 className="text-lg font-semibold text-ink mb-2">
+                  <h3 className="text-lg font-semibold text-heading mb-2">
                     {c.title}
                   </h3>
                   <p className="text-sm text-text-soft">{c.desc}</p>

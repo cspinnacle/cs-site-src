@@ -25,12 +25,12 @@ export default function CurriculumPath() {
         >
           <div
             className={`w-[54px] h-[54px] rounded-full flex items-center justify-center mx-auto mb-3.5 font-mono font-semibold text-sm border-[3px] border-paper ${
-              n.current ? "bg-string text-ink btn-glow" : "bg-ink text-white"
+              n.current ? "bg-string text-heading btn-glow" : "bg-ink text-white"
             }`}
           >
             {n.label}
           </div>
-          <h4 className="text-sm font-semibold text-ink mb-1">{n.title}</h4>
+          <h4 className="text-sm font-semibold text-heading mb-1">{n.title}</h4>
           <div className="font-mono text-xs text-comment">{n.sub}</div>
         </motion.div>
       ))}

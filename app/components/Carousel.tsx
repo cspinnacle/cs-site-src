@@ -57,7 +57,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
           <Link
             key={item.slug}
             href={item.href}
-            className="group snap-start shrink-0 w-[260px] sm:w-[300px] bg-white p-6 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(22,35,61,0.16)] transition-all"
+            className="group snap-start shrink-0 w-[260px] sm:w-[300px] bg-surface p-6 shadow-[0_4px_24px_-8px_rgba(22,35,61,0.10)] hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(22,35,61,0.16)] transition-all"
           >
             <span
               className={`text-xs font-semibold uppercase tracking-wide ${
@@ -66,7 +66,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
             >
               {item.kind === "article" ? "Article" : "Newsletter"}
             </span>
-            <h3 className="text-lg font-semibold text-ink mt-2 mb-2 leading-snug group-hover:text-keyword-dim transition-colors">
+            <h3 className="text-lg font-semibold text-heading mt-2 mb-2 leading-snug group-hover:text-keyword-dim transition-colors">
               {item.title}
             </h3>
             <p className="text-sm text-text-soft line-clamp-3">{item.excerpt}</p>
@@ -91,7 +91,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
               onClick={() => scrollToIndex(i)}
               aria-label={`Go to slide ${i + 1}`}
               className={`h-1.5 rounded-full transition-all ${
-                i === active ? "w-6 bg-keyword" : "w-1.5 bg-border"
+                i === active ? "w-6 bg-string" : "w-1.5 bg-border"
               }`}
             />
           ))}
@@ -101,7 +101,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
             onClick={() => scrollToIndex(Math.max(0, active - 1))}
             aria-label="Previous"
             disabled={active === 0}
-            className="w-9 h-9 rounded-full bg-paper-2 text-ink flex items-center justify-center hover:bg-border disabled:opacity-30 disabled:hover:bg-paper-2 transition-colors"
+            className="w-9 h-9 rounded-full bg-paper-2 text-heading flex items-center justify-center hover:bg-border disabled:opacity-30 disabled:hover:bg-paper-2 transition-colors"
           >
             &larr;
           </button>
@@ -109,7 +109,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
             onClick={() => scrollToIndex(Math.min(items.length - 1, active + 1))}
             aria-label="Next"
             disabled={active === items.length - 1}
-            className="w-9 h-9 rounded-full bg-paper-2 text-ink flex items-center justify-center hover:bg-border disabled:opacity-30 disabled:hover:bg-paper-2 transition-colors"
+            className="w-9 h-9 rounded-full bg-paper-2 text-heading flex items-center justify-center hover:bg-border disabled:opacity-30 disabled:hover:bg-paper-2 transition-colors"
           >
             &rarr;
           </button>

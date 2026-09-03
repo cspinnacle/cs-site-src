@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
 const navigation = [
   { name: "class-info", href: "/class-info/" },
@@ -20,7 +21,7 @@ export default function Navigation() {
     <header className="fixed top-4 inset-x-4 md:inset-x-8 z-50">
       <div className="max-w-6xl mx-auto relative">
         <nav className="bg-paper/95 backdrop-blur-sm rounded-full shadow-[0_8px_30px_-4px_rgba(22,35,61,0.18)] px-5 py-2.5 flex items-center justify-between">
-          <Link href="/" className="font-mono text-sm text-ink font-medium inline-flex items-center">
+          <Link href="/" className="font-mono text-sm text-heading font-medium inline-flex items-center">
             cs<span className="text-string">/</span>pinnacle<span className="caret ml-0.5" />
           </Link>
 
@@ -33,7 +34,7 @@ export default function Navigation() {
                     <Link
                       href={item.href}
                       className={`text-sm transition-colors ${
-                        active ? "text-ink font-semibold" : "text-text-soft hover:text-ink"
+                        active ? "text-heading font-semibold" : "text-text-soft hover:text-heading"
                       }`}
                     >
                       {item.name}
@@ -44,19 +45,21 @@ export default function Navigation() {
             </ul>
             <Link
               href="/newsletters/"
-              className="btn-glow inline-flex items-center px-4 py-2 rounded-full bg-ink text-white text-sm font-semibold hover:-translate-y-0.5 transition-transform"
+              className="btn-hard inline-flex items-center px-4 py-2 rounded-full bg-ink text-white text-sm font-semibold"
             >
               Newsletters
             </Link>
+            <ThemeToggle />
           </div>
 
           <div className="flex items-center gap-2 md:hidden">
             <Link
               href="/newsletters/"
-              className="btn-glow inline-flex items-center px-3.5 py-1.5 rounded-full bg-ink text-white text-sm font-semibold"
+              className="btn-hard inline-flex items-center px-3.5 py-1.5 rounded-full bg-ink text-white text-sm font-semibold"
             >
               Newsletters
             </Link>
+            <ThemeToggle />
             <button
               onClick={() => setOpen(!open)}
               aria-label="Toggle menu"
@@ -66,17 +69,17 @@ export default function Navigation() {
               <motion.span
                 animate={{ rotate: open ? 45 : 0, y: open ? 6 : 0 }}
                 transition={{ duration: 0.25 }}
-                className="w-4.5 h-0.5 bg-ink block origin-center"
+                className="w-4.5 h-0.5 bg-heading block origin-center"
               />
               <motion.span
                 animate={{ opacity: open ? 0 : 1 }}
                 transition={{ duration: 0.15 }}
-                className="w-4.5 h-0.5 bg-ink block"
+                className="w-4.5 h-0.5 bg-heading block"
               />
               <motion.span
                 animate={{ rotate: open ? -45 : 0, y: open ? -6 : 0 }}
                 transition={{ duration: 0.25 }}
-                className="w-4.5 h-0.5 bg-ink block origin-center"
+                className="w-4.5 h-0.5 bg-heading block origin-center"
               />
             </button>
           </div>
@@ -97,7 +100,7 @@ export default function Navigation() {
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={`block px-6 py-4 text-sm ${
-                    isActive(item.href) ? "text-ink font-semibold" : "text-text-soft"
+                    isActive(item.href) ? "text-heading font-semibold" : "text-text-soft"
                   }`}
                 >
                   {item.name}

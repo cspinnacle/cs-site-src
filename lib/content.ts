@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import GithubSlugger from 'github-slugger';
 
 const contentDirectory = path.join(process.cwd(), 'content');
 
@@ -67,6 +68,49 @@ export function getContentItems(folder: 'newsletters' | 'articles' | 'events' | 
 
 export function slugifyCategory(category: string): string {
   return category.trim().toLowerCase().replace(/\s+/g, '-');
+}
+
+export interface Heading {
+  depth: number;
+  text: string;
+  slug: string;
+}
+
+// Mirrors rehype-slug's heading-id algorithm (same github-slugger library)
+// so these anchors match the ids react-markdown actually renders.
+export function extractHeadings(content: string): Heading[] {
+  const slugger = new GithubSlugger();
+  const headings: Heading[] = [];
+  const lines = content.split('\n');
+  let inCodeFence = false;
+
+  for (const line of lines) {
+    if (/^```/.test(line.trim())) {
+      inCodeFence = !inCodeFence;
+      continue;
+    }
+    if (inCodeFence) continue;
+
+    const match = /^(#{2,3})\s+(.+)$/.exec(line.trim());
+    if (match) {
+      const text = match[2].replace(/[*_`]/g, '').trim();
+      headings.push({
+        depth: match[1].length,
+        text,
+        slug: slugger.slug(text),
+      });
+    }
+  }
+
+  return headings;
+}
+
+export function estimateReadingTime(content: string): number {
+  const words = content
+    .replace(/```[\s\S]*?```/g, '')
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
 }
 
 export function excerpt(content: string, maxLen = 140): string {

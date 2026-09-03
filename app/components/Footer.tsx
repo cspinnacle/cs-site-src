@@ -8,7 +8,7 @@ export default function Footer() {
           <div>
             <h4 className="font-mono text-sm text-white mb-4">cs/pinnacle</h4>
             <p className="text-sm max-w-xs">
-              The class hub for Computer Science at Pinnacle Academy — Grades
+              Computer Science at Pinnacle Academy — Grades
               6 through 11.
             </p>
           </div>

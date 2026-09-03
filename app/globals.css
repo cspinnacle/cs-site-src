@@ -1,12 +1,17 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* =========================================================
    CS @ Pinnacle Academy — Design Tokens
    Palette drawn from a code editor's syntax theme: an "ink"
    background, teal keyword accent, amber string accent, plus
    a rare rose used only for tiny sample/live indicators.
-   Committed to a single designed theme (no auto dark-mode
-   switch) so the palette stays intentional everywhere.
+   --color-ink is the "accent surface" used for bands, buttons
+   and pills, not the page background — navy in light mode,
+   a near-black neutral (not navy) in dark mode so it doesn't
+   clash with the near-black page. --color-heading/--color-surface/
+   --color-paper* are the tokens that flip between light and dark too.
    ========================================================= */
 :root {
   --color-ink: #16233d;
@@ -14,6 +19,8 @@
   --color-ink-3: #26375a;
   --color-paper: #f6f7fb;
   --color-paper-2: #eceff5;
+  --color-surface: #ffffff;
+  --color-heading: #16233d;
   --color-keyword: #2fa6a6;
   --color-keyword-dim: #1f7a7a;
   --color-string: #e3a548;
@@ -25,12 +32,54 @@
   --color-border-dark: #33436a;
 }
 
+:root[data-theme="dark"] {
+  --color-ink: #1e2024;
+  --color-ink-2: #26282d;
+  --color-ink-3: #2f3136;
+  --color-paper: #131417;
+  --color-paper-2: #1b1c20;
+  --color-surface: #1c1d22;
+  --color-heading: #f1f2f5;
+  --color-keyword: #4fc7c7;
+  --color-keyword-dim: #7cd6d6;
+  --color-string: #f0b95e;
+  --color-comment: #8a90a0;
+  --color-rose: #ef7d70;
+  --color-text: #e4e5ea;
+  --color-text-soft: #aeb2bf;
+  --color-border: #303237;
+  --color-border-dark: #3a3d44;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-ink: #1e2024;
+    --color-ink-2: #26282d;
+    --color-ink-3: #2f3136;
+    --color-paper: #131417;
+    --color-paper-2: #1b1c20;
+    --color-surface: #1c1d22;
+    --color-heading: #f1f2f5;
+    --color-keyword: #4fc7c7;
+    --color-keyword-dim: #7cd6d6;
+    --color-string: #f0b95e;
+    --color-comment: #8a90a0;
+    --color-rose: #ef7d70;
+    --color-text: #e4e5ea;
+    --color-text-soft: #aeb2bf;
+    --color-border: #303237;
+    --color-border-dark: #3a3d44;
+  }
+}
+
 @theme inline {
   --color-ink: var(--color-ink);
   --color-ink-2: var(--color-ink-2);
   --color-ink-3: var(--color-ink-3);
   --color-paper: var(--color-paper);
   --color-paper-2: var(--color-paper-2);
+  --color-surface: var(--color-surface);
+  --color-heading: var(--color-heading);
   --color-keyword: var(--color-keyword);
   --color-keyword-dim: var(--color-keyword-dim);
   --color-string: var(--color-string);
@@ -49,7 +98,9 @@ html {
   scroll-behavior: smooth;
 }
 
-section[id] {
+section[id],
+.prose h2[id],
+.prose h3[id] {
   scroll-margin-top: 144px;
 }
 
@@ -58,6 +109,7 @@ body {
   color: var(--color-text);
   font-family: var(--font-body), -apple-system, Segoe UI, sans-serif;
   line-height: 1.6;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 h1, h2, h3 {
@@ -67,7 +119,7 @@ h1, h2, h3 {
 
 @layer base {
   h1, h2, h3 {
-    color: var(--color-ink);
+    color: var(--color-heading);
   }
 
   a:focus-visible,
@@ -133,6 +185,33 @@ h1, h2, h3 {
   animation-duration: 1.4s;
 }
 
+/* Chunky, offset-shadow CTA button, in the spirit of DataCamp's
+   layered promo blocks: a solid color-block with a hard shadow
+   that the button "presses into" on hover/press. */
+.btn-hard {
+  box-shadow: 4px 4px 0 0 var(--color-string);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-hard:hover,
+.btn-hard:focus-visible {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 var(--color-string);
+}
+.btn-hard:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 0 var(--color-string);
+}
+
+/* Decorative undraw.co illustrations ship in a fixed brand purple;
+   desaturate them so they read as part of the ink/paper/string
+   palette instead of adding an off-brand accent color. */
+.illustration {
+  filter: grayscale(1);
+}
+:root[data-theme="dark"] .illustration {
+  filter: grayscale(1) sepia(0.3) hue-rotate(175deg) saturate(0.7) brightness(1.05) contrast(0.9);
+}
+
 /* Prose (markdown-rendered newsletters/articles) */
 .prose {
   color: var(--color-text-soft);
@@ -144,16 +223,93 @@ h1, h2, h3 {
   margin-top: 0;
 }
 .prose h1, .prose h2, .prose h3 {
-  color: var(--color-ink);
+  color: var(--color-heading);
   font-family: var(--font-display), Georgia, serif;
 }
 .prose h2 {
-  margin-top: 2.25rem;
+  margin-top: 3rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-border);
+}
+.prose .heading-comment {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-keyword-dim);
+  letter-spacing: 0.02em;
+}
+/* First paragraph reads as a lede: larger and lighter than body copy. */
+.prose > p:first-of-type {
+  font-size: 1.2rem;
+  line-height: 1.55;
+  color: var(--color-heading);
+  font-weight: 400;
 }
 .prose a {
   color: var(--color-keyword-dim);
   text-decoration: none;
   border-bottom: 1px solid var(--color-keyword);
+}
+.prose ul, .prose ol {
+  padding-left: 0;
+}
+.prose ul {
+  list-style: none;
+}
+.prose ul > li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+.prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-string);
+}
+.prose ol {
+  list-style: none;
+  counter-reset: prose-ol;
+}
+.prose ol > li {
+  position: relative;
+  padding-left: 1.75rem;
+  counter-increment: prose-ol;
+}
+.prose ol > li::before {
+  content: counter(prose-ol);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-keyword-dim);
+}
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding: 0.9rem 1.25rem;
+  border-left: 3px solid var(--color-string);
+  background: var(--color-paper-2);
+  color: var(--color-text);
+  font-style: normal;
+}
+.prose blockquote p {
+  margin: 0.4rem 0;
+}
+.prose figure {
+  margin: 1.5rem 0;
+}
+.prose figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--color-comment);
+  text-align: center;
 }
 .prose pre {
   background: var(--color-ink);

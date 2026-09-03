@@ -3,8 +3,16 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
-import { getContentItems, getContentItem, ContentItem } from "@/lib/content";
+import {
+  getContentItems,
+  getContentItem,
+  extractHeadings,
+  estimateReadingTime,
+  ContentItem,
+} from "@/lib/content";
 import { notFound } from "next/navigation";
+import TableOfContents from "../../components/TableOfContents";
+import { proseMarkdownComponents } from "../../components/proseMarkdownComponents";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -30,6 +38,9 @@ export default async function NewsletterPage({ params }: Props) {
   const newsletter = getContentItem("newsletters", slug) as ContentItem;
   if (!newsletter) notFound();
 
+  const headings = extractHeadings(newsletter.content);
+  const readingTime = estimateReadingTime(newsletter.content);
+
   return (
     <>
       <div className="bg-ink text-white pt-[110px] pb-11">
@@ -47,16 +58,20 @@ export default async function NewsletterPage({ params }: Props) {
                 {new Date(newsletter.date + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
               </span>
             )}
+            <span>{readingTime} min read</span>
           </div>
           <h1 className="text-white text-3xl md:text-4xl font-semibold">{newsletter.title}</h1>
         </div>
       </div>
 
-      <article className="max-w-3xl mx-auto px-6 py-14 prose">
-        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSlug]}>
-          {newsletter.content}
-        </ReactMarkdown>
-      </article>
+      <div className="max-w-5xl mx-auto px-6 py-14 grid lg:grid-cols-[1fr_220px] gap-12">
+        <article className="prose min-w-0">
+          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSlug]} components={proseMarkdownComponents}>
+            {newsletter.content}
+          </ReactMarkdown>
+        </article>
+        <TableOfContents headings={headings} />
+      </div>
     </>
   );
 }

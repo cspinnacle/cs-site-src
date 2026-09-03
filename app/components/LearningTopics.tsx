@@ -55,7 +55,7 @@ const TOPICS: Topic[] = [
 function TopicEntry({ topic }: { topic: Topic }) {
   const content = (
     <>
-      <h3 className="font-semibold text-ink group-hover:text-keyword-dim transition-colors">
+      <h3 className="font-semibold text-heading group-hover:text-keyword-dim transition-colors">
         {topic.title}
         {topic.href && (
           <span className="inline-block ml-1 transition-transform group-hover:translate-x-1" aria-hidden>

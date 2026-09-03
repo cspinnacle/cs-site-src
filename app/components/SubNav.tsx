@@ -32,7 +32,10 @@ export default function SubNav() {
           }
         });
       },
-      { rootMargin: "-30% 0px -55% 0px" }
+      // Band starts just below the fixed header + SubNav (matching the
+      // 144px scroll-margin-top sections land at) so the clicked/current
+      // section actually falls inside the detection zone.
+      { rootMargin: "-150px 0px -70% 0px" }
     );
     targets.forEach((t) => io.observe(t));
     return () => io.disconnect();
@@ -50,7 +53,7 @@ export default function SubNav() {
               className={`relative shrink-0 font-mono text-xs whitespace-nowrap px-3.5 py-1.5 rounded-full transition-colors ${
                 isActive
                   ? "text-white"
-                  : "bg-paper/70 backdrop-blur-md border border-white/50 text-text-soft hover:text-ink hover:bg-paper/90"
+                  : "bg-paper/70 backdrop-blur-md border border-white/50 text-text-soft hover:text-heading hover:bg-paper/90"
               }`}
             >
               {isActive && (

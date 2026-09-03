@@ -15,9 +15,6 @@ export default function ArticlesPage() {
     <>
       <div className="bg-ink text-white pt-[110px] pb-11">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="font-mono text-sm text-comment mb-3.5">
-            cs/pinnacle/<span className="text-string">articles.md</span>
-          </div>
           <h1 className="text-white text-3xl md:text-4xl font-semibold">Articles &amp; Tutorials</h1>
           <p className="max-w-xl mt-3.5 text-[#B9C4DC]">
             Programming guides and plain-language explainers — written for
@@ -40,7 +37,7 @@ export default function ArticlesPage() {
                     href={`/articles/${a.slug}`}
                     className="group flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 py-4 px-2 -mx-2 border-b border-border hover:bg-paper-2 transition-colors"
                   >
-                    <h2 className="text-ink group-hover:text-keyword-dim transition-colors">
+                    <h2 className="text-heading group-hover:text-keyword-dim transition-colors">
                       {a.title}
                     </h2>
                     <span className="sm:ml-auto flex items-center gap-3 text-xs text-comment whitespace-nowrap">
